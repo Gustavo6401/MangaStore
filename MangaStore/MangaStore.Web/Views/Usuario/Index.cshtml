@@ -1,0 +1,131 @@
+﻿@using X.PagedList.Mvc.Core
+
+@model X.PagedList.IPagedList<MangaStore.Web.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if(ViewBag.Erro != null) 
+{
+    <h4>@ViewBag.Erro</h4>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>    
+</p>
+<form asp-action="Index" method="post">
+    <div>
+        <label>Filtrar Por Nome</label>
+        <input type="name" name="nome" />
+        <span class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
+</form>
+<div class="table-responsive">
+    <form asp-action=AtivarUsuario method=post id=AtivarUsuario>
+        <table id="myTable" class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    E-Mail
+                </th>
+                <th>
+                    Senha
+                </th>
+                <th>
+                    Telefone
+                </th>
+                <th>
+                    Permissão
+                </th>
+                <th>
+                    Ativo
+                </th>
+                <th>
+                    CPF
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) 
+            {                
+                <tr>
+                    <td>
+                        <input asp-for=@(item.Id) name=id readonly />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Senha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Permisao)
+                        </td>
+                        <td>
+                            <input asp-for=@(item.Ativo) name=ativo onclick="AtivarUsuario()" class="form-check-input" type="checkbox" />
+                        </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.CPF)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                
+            }        
+        </tbody>
+    </table>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <ul class="pagination">
+            
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+        </ul>        
+    </div>
+</div>
+
+@*
+    <section class="row">
+    <div class="col-md-2">
+        <div id="AtivarUsuario">
+
+        </div>
+    </div>
+</section>
+*@
+
+@section Scripts {
+    <script language="JavaScript" type="text/javascript">
+        function AtivarUsuario() {
+            document.querySelector('#AtivarUsuario')
+                .insertAdjacentHTML('beforeend',
+                    `<label class="form-control">Tem Certeza de que você quer Desativar/Ativar o usuário?</label></br>
+                     <input type="submit" value="Desativar Usuário" class="btn btn-primary" />`);
+        }
+    </script>
+}

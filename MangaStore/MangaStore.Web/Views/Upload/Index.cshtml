@@ -1,0 +1,29 @@
+﻿@model MangaStore.Web.Models.ImagensProduto;
+
+@{
+    ViewData["Title"] = "Realizar Upload";
+}
+<h1>Enviar Arquivos</h1>
+<hr>
+<div class="jubtron jubtron-fluid">
+    <div class="container">
+        <div class="row">
+            <section>
+                <form method="post" enctype="multipart/form-data" asp-controller="Upload" asp-action="SendFile">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>Enviar um ou Mais Arquivos</p>
+                            <input type="file" name="files" multiple>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" class="btn btn-primary" value="Enviar Arquivo">
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+<a asp-action="Index" asp-controller="Home" class="btn btn-warning">Voltar à Página Inicial</a>

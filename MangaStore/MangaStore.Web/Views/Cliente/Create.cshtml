@@ -1,0 +1,133 @@
+﻿@model MangaStore.Web.Models.ViewModels.ClienteViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Cadastro</h1>
+
+<h4>Cliente</h4>
+<hr />
+<section class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for=Usuario.Nome class="control-label">Nome</label>
+                <input asp-for=Usuario.Nome class="form-control" />
+                <span asp-validation-for=Usuario.Nome class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.EMail class="control-label">E-Mail</label>
+                <input asp-for=Usuario.EMail class="form-control" type="email" />
+                <span asp-validation-for=Usuario.EMail class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.Senha class="control-label">Senha</label>
+                <input asp-for=Usuario.Senha class="form-control" type="password" />
+                <span asp-validation-for=Usuario.Senha class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.Telefone class="control-label">Telefone</label>
+                <input asp-for=Usuario.Telefone class="form-control" />
+                <span asp-validation-for=Usuario.Telefone class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.Permisao class="control-label"></label>
+                @Html.DropDownListFor(model => model.Usuario.Permisao, new List<SelectListItem> {                    
+                    new SelectListItem { Text = "Cliente"}
+                })
+                <span asp-validation-for=Usuario.Permisao class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.Ativo class="control-label">Ativo</label>
+                @Html.CheckBoxFor(model => model.Usuario.Ativo)
+                <span asp-validation-for=Usuario.Ativo class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Usuario.CPF class="control-label">CPF</label>
+                <input asp-for=Usuario.CPF class="form-control" />
+                <span asp-validation-for=Usuario.CPF class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.CEP class="control-label">CEP</label>
+                <input asp-for=Endereco.CEP class="form-control" />
+                <span asp-validation-for=Endereco.CEP class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.Rua class="control-label">Rua</label>
+                <input asp-for=Endereco.Rua class="form-control" />
+                <span asp-validation-for=Endereco.Rua class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.Bairro class="control-label">Bairro</label>
+                <input asp-for=Endereco.Bairro class="form-control" />
+                <span asp-validation-for=Endereco.Bairro class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.Cidade class="control-label">Cidade</label>
+                <input asp-for=Endereco.Cidade class="form-control" />
+                <span asp-validation-for=Endereco.Cidade class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.UF class="control-label">UF</label>
+                @Html.DropDownListFor(model => model.Endereco.UF, new List<SelectListItem> {
+                    new SelectListItem { Text = "AC" },
+                    new SelectListItem { Text = "AL" },
+                    new SelectListItem { Text = "AM" },
+                    new SelectListItem { Text = "AP" },
+                    new SelectListItem { Text = "BA" },
+                    new SelectListItem { Text = "CE" },
+                    new SelectListItem { Text = "DF" },
+                    new SelectListItem { Text = "ES" },
+                    new SelectListItem { Text = "GO" },
+                    new SelectListItem { Text = "MA" },
+                    new SelectListItem { Text = "MG" },
+                    new SelectListItem { Text = "MS" },
+                    new SelectListItem { Text = "MT" },
+                    new SelectListItem { Text = "PA" },
+                    new SelectListItem { Text = "PB" },
+                    new SelectListItem { Text = "PE" },
+                    new SelectListItem { Text = "PI" },
+                    new SelectListItem { Text = "PR" },
+                    new SelectListItem { Text = "RJ" },
+                    new SelectListItem { Text = "RN" },
+                    new SelectListItem { Text = "RO" },
+                    new SelectListItem { Text = "RR" },
+                    new SelectListItem { Text = "RS" },
+                    new SelectListItem { Text = "SC" },
+                    new SelectListItem { Text = "SE" },
+                    new SelectListItem { Text = "SP" },
+                    new SelectListItem { Text = "TO" }
+                })
+                <span asp-validation-for=Endereco.UF class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Endereco.Numero class="control-label">Número</label>
+                <input asp-for=Endereco.Numero class="form-control" type="number" />
+                <span asp-validation-for=Endereco.Numero class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label asp-for=Cliente.RG class="control-label">RG</label>
+                <input asp-for=Cliente.RG class="form-control" />
+                <span asp-validation-for=Cliente.RG class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Cliente.DataNascimento class="control-label">Data de Nascimento</label>
+                <input asp-for=Cliente.DataNascimento class="form-control" />
+                <span asp-validation-for=Cliente.DataNascimento class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</section>
+
+<div>
+    <a asp-action="Index" class="btn btn-warning">Voltar Para a Página Inicial</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

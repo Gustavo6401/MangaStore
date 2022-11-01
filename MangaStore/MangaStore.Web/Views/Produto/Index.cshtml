@@ -1,0 +1,148 @@
+﻿@using X.PagedList.Mvc.Core
+
+@model X.PagedList.IPagedList<MangaStore.Web.Models.Produto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index" method="post">
+    <div>
+        <label>Buscar Produto</label>
+        <input type="text" name="nome" />
+        <span class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
+</form>
+
+<p>
+    @if(User.IsInRole("Administrador")) 
+    {
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    }
+</p>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Avaliação
+            </th>
+            <th>
+                Descrição Detalhada
+            </th>
+            <th>
+                Preço
+            </th>
+            <th>
+                Quantidade em Estoque
+            </th>
+            <th>
+                Custo
+            </th>
+            <th>
+                Ativo ou Não?
+            </th>
+        </tr>
+    </thead>
+    <tbody id="meusResultados">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avaliacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescricaoDetalhada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtdEstoque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Custo)
+            </td>
+            <td>
+                @Html.CheckBoxFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                @if(User.IsInRole("Administrador")) 
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                }             
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="row">
+    @*<ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">@Model.PageNumber - 1</a></li>
+        <li class="page-item"><a class="page-link" href="#">@Model.PageNumber</a></li>
+        <li class="page-item"><a class="page-link" href="#">@Model.PageNumber + 1</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>*@
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount   @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+</div>
+
+@section Scripts {
+    <script>
+        /*var tamanhoPagina = 1;
+        var pagina = 0;
+
+        var quantidadeDeElementos = document.querySelectorAll('#meusResultados');
+        var tbody = document.getElementById('meusResultados');
+
+        function paginar() {
+            $('#meusResultados > tr').remove();
+
+            for(var item = pagina + item; item < (pagina + tamanhoPagina); item++) {
+                tbody.append(
+                    $('<tr>').append(quantidadeDeElementos.item(item));
+                );
+            }
+
+            $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(dados.length / tamanhoPagina));
+        }
+
+        function ajustarBotoes() {
+            $('#proximo').prop('disabled', dados.length <= tamanhoPagina || pagina > dados.length / tamanhoPagina - 1);
+            $('#anterior').prop('disabled', dados.length <= tamanhoPagina || pagina == 0);
+        }
+
+        $(function() {
+            $('#proximo').click(function() {
+                if (pagina < dados.length / tamanhoPagina - 1) {
+                    pagina++;
+                    paginar();
+                    ajustarBotoes();
+                }
+            });
+
+            $('#anterior').click(function() {
+                if (pagina > 0) {
+                    pagina--;
+                    paginar();
+                    ajustarBotoes();
+                }
+            });
+            paginar();
+            ajustarBotoes();
+            });*/
+    </script>
+}

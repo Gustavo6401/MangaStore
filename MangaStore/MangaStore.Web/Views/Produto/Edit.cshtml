@@ -1,0 +1,95 @@
+﻿@model MangaStore.Web.Models.Produto
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Produto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            @if(User.IsInRole("Administrador"))
+            {
+                <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Avaliacao" class="control-label"></label>
+                <input asp-for="Avaliacao" class="form-control" />
+                <span asp-validation-for="Avaliacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescricaoDetalhada" class="control-label"></label>
+                <input asp-for="DescricaoDetalhada" class="form-control" />
+                <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QtdEstoque" class="control-label"></label>
+                <input asp-for="QtdEstoque" class="form-control" />
+                <span asp-validation-for="QtdEstoque" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Custo" class="control-label"></label>
+                <input asp-for="Custo" class="form-control" />
+                <span asp-validation-for="Custo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            }
+            @if(User.IsInRole("Estoquista"))
+            {
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Nome)
+                    @Html.DisplayFor(model => model.Nome)
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Avaliacao)
+                    @Html.DisplayFor(model => model.Avaliacao)
+                    <span asp-validation-for="Avaliacao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.DescricaoDetalhada)
+                    @Html.DisplayFor(model => model.DescricaoDetalhada)
+                    <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Preco)
+                    @Html.DisplayFor(model => model.Preco)
+                    <span asp-validation-for="Preco" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="QtdEstoque" class="control-label"></label>
+                    <input asp-for="QtdEstoque" class="form-control" />
+                    <span asp-validation-for="QtdEstoque" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Custo)
+                    @Html.DisplayFor(model => model.Custo)
+                    <span asp-validation-for="Custo" class="text-danger"></span>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-warning">Voltar para a Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
