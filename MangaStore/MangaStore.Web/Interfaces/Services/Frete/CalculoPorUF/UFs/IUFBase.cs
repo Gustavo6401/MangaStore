@@ -2,5 +2,5 @@
 
 public interface IUFBase
 {
-    
+    public decimal Calcular(string uf);
 }

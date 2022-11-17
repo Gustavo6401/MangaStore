@@ -27,8 +27,7 @@
     </div>
 </form>
 <div class="table-responsive">
-    <form asp-action=AtivarUsuario method=post id=AtivarUsuario>
-        <table id="myTable" class="table">
+    <table id="myTable" class="table">
         <thead>
             <tr>
                 <th>
@@ -76,13 +75,16 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Telefone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Permisao)
-                        </td>
-                        <td>
-                            <input asp-for=@(item.Ativo) name=ativo onclick="AtivarUsuario()" class="form-check-input" type="checkbox" />
-                        </td>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Permisao)
+                    </td>
+                    <td>
+                        <form asp-action=AtivarUsuario>
+                            <input type="hidden" asp-for=@(item.Id) name=id />
+                            <input asp-for=@(item.Ativo) name=ativo onclick="AtivarUsuario()" class="form-check-input" id="check" type="checkbox" />
+                        </form>
+                    </td>
                     <td>
                             @Html.DisplayFor(modelItem => item.CPF)
                     </td>
@@ -96,7 +98,6 @@
             }        
         </tbody>
     </table>
-    </form>
 </div>
 
 <div class="row">
@@ -121,11 +122,10 @@
 
 @section Scripts {
     <script language="JavaScript" type="text/javascript">
-        function AtivarUsuario() {
-            document.querySelector('#AtivarUsuario')
-                .insertAdjacentHTML('beforeend',
-                    `<label class="form-control">Tem Certeza de que você quer Desativar/Ativar o usuário?</label></br>
-                     <input type="submit" value="Desativar Usuário" class="btn btn-primary" />`);
-        }
+        $(function () {
+            $("#check").change(function() {
+                $(this).closest('form').submit();
+            })
+        })
     </script>
 }

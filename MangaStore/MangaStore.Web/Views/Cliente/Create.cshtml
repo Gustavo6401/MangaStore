@@ -1,7 +1,7 @@
-﻿@model MangaStore.Web.Models.ViewModels.ClienteViewModel;
+﻿@model MangaStore.Web.Models.ViewModels.CadastrarClienteViewModel;
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Create";
 }
 
 <h1>Cadastro</h1>
@@ -50,28 +50,88 @@
                 <span asp-validation-for=Usuario.CPF class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for=Cliente.RG class="control-label">RG</label>
+                <input asp-for=Cliente.RG class="form-control" />
+                <span asp-validation-for=Cliente.RG class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Cliente.DataNascimento class="control-label">Data de Nascimento</label>
+                <input asp-for=Cliente.DataNascimento class="form-control" />
+                <span asp-validation-for=Cliente.DataNascimento class="text-danger"></span>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>CEP</th>
+                    <th>Rua</th>
+                    <th>Número</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>UF</th>
+                </tr>
+                </thead>
+                <tbody>
+                @*@if (Model.ListaEnderecos != null)
+                {
+                    @foreach (var item in Model.ListaEnderecos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.CEP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Rua)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Numero)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Bairro)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Cidade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.UF)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <div>Adicione um Endereço</div>
+                }*@
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-success" />
+            </div>
+        </form>
+        <form asp-action="AdicionarEndereco">
+            <div class="form-group">
                 <label asp-for=Endereco.CEP class="control-label">CEP</label>
-                <input asp-for=Endereco.CEP class="form-control" />
+                <input asp-for=Endereco.CEP class="form-control"/>
                 <span asp-validation-for=Endereco.CEP class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Rua class="control-label">Rua</label>
-                <input asp-for=Endereco.Rua class="form-control" />
+                <input asp-for=Endereco.Rua class="form-control"/>
                 <span asp-validation-for=Endereco.Rua class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Bairro class="control-label">Bairro</label>
-                <input asp-for=Endereco.Bairro class="form-control" />
+                <input asp-for=Endereco.Bairro class="form-control"/>
                 <span asp-validation-for=Endereco.Bairro class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Cidade class="control-label">Cidade</label>
-                <input asp-for=Endereco.Cidade class="form-control" />
+                <input asp-for=Endereco.Cidade class="form-control"/>
                 <span asp-validation-for=Endereco.Cidade class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.UF class="control-label">UF</label>
-                @Html.DropDownListFor(model => model.Endereco.UF, new List<SelectListItem> {
+                @Html.DropDownListFor(model => model.Endereco.UF, new List<SelectListItem>
+                {
                     new SelectListItem { Text = "AC" },
                     new SelectListItem { Text = "AL" },
                     new SelectListItem { Text = "AM" },
@@ -104,21 +164,16 @@
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Numero class="control-label">Número</label>
-                <input asp-for=Endereco.Numero class="form-control" type="number" />
+                <input asp-for=Endereco.Numero class="form-control" type="number"/>
                 <span asp-validation-for=Endereco.Numero class="text-danger"></span>
-            </div>            
-            <div class="form-group">
-                <label asp-for=Cliente.RG class="control-label">RG</label>
-                <input asp-for=Cliente.RG class="form-control" />
-                <span asp-validation-for=Cliente.RG class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for=Cliente.DataNascimento class="control-label">Data de Nascimento</label>
-                <input asp-for=Cliente.DataNascimento class="form-control" />
-                <span asp-validation-for=Cliente.DataNascimento class="text-danger"></span>
+                <label asp-for=Endereco.EnderecoPadrao class="control-label">Endereço Padrão?</label>
+                @Html.CheckBoxFor(e => e.Endereco.EnderecoPadrao)
+                <span asp-validation-for=Endereco.EnderecoPadrao class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-success" />
+                <input type="submit" value="Adicionar Endereço" class="btn btn-success" />
             </div>
         </form>
     </div>

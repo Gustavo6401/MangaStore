@@ -50,7 +50,7 @@
 </div>
 <img href="@ViewBag.Images" />
 <div>
-    <button class="btn btn-success" disabled>Comprar</button>
+    <a class="btn btn-success" asp-controller="Carrinho" asp-action="Add" asp-route-id="@Model.Id">Comprar</a>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

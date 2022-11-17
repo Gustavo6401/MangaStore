@@ -24,7 +24,8 @@ namespace MangaStore.Web.Models
         [DataType("char(2)")]
         public string UF { get; set; }
         [Required(ErrorMessage = "O campo {0} é de preenchimento obrigatório")]
-        public int Numero { get; set; }        
+        public int Numero { get; set; }
+        public bool EnderecoPadrao { get; set; }
 
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }

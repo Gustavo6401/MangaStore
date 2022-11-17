@@ -255,5 +255,18 @@ namespace MangaStore.Web.Controllers
         {
             return (_context.Produto?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> AtivarProduto(int id, bool ativo)
+        {
+            ProdutoRepository repository = new ProdutoRepository();
+            Produto produto = repository.GetById(id);
+
+            produto.Ativo = ativo;
+            
+            repository.Update(produto);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

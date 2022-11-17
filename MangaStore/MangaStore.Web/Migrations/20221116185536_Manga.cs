@@ -135,6 +135,7 @@ namespace MangaStore.Web.Migrations
                     Cidade = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     UF = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
                     Numero = table.Column<int>(type: "int", nullable: false),
+                    EnderecoPadrao = table.Column<bool>(type: "bit", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -144,6 +145,55 @@ namespace MangaStore.Web.Migrations
                         name: "FK_EnderecoCliente_Cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Cliente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pedido",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FormaPagamento = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pedido", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pedido_Cliente_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Cliente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProdutoPedido",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QtdComprada = table.Column<int>(type: "int", nullable: false),
+                    ProdutoId = table.Column<int>(type: "int", nullable: false),
+                    PedidoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProdutoPedido", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProdutoPedido_Pedido_PedidoId",
+                        column: x => x.PedidoId,
+                        principalTable: "Pedido",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProdutoPedido_Produto_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produto",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -167,6 +217,21 @@ namespace MangaStore.Web.Migrations
                 name: "IX_ImagensProduto_ProdutoId",
                 table: "ImagensProduto",
                 column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pedido_ClienteId",
+                table: "Pedido",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProdutoPedido_PedidoId",
+                table: "ProdutoPedido",
+                column: "PedidoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProdutoPedido_ProdutoId",
+                table: "ProdutoPedido",
+                column: "ProdutoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -184,10 +249,16 @@ namespace MangaStore.Web.Migrations
                 name: "ImagensProduto");
 
             migrationBuilder.DropTable(
-                name: "Cliente");
+                name: "ProdutoPedido");
+
+            migrationBuilder.DropTable(
+                name: "Pedido");
 
             migrationBuilder.DropTable(
                 name: "Produto");
+
+            migrationBuilder.DropTable(
+                name: "Cliente");
 
             migrationBuilder.DropTable(
                 name: "Usuario");

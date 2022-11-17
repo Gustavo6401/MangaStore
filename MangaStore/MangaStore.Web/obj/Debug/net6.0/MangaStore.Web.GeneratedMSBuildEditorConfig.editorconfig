@@ -15,6 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Carrinho/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FycmluaG9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Checkout/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tvdXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Cliente/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -55,8 +63,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Shared/Components/Carrinho/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2FycmluaG9cRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Shared/_NotificationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob3RpZmljYXRpb25QYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Shared/_ValidationScriptsPartial.cshtml]

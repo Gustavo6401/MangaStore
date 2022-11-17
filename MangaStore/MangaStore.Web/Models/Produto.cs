@@ -29,5 +29,6 @@ namespace MangaStore.Web.Models
         [DataType("decimal(4,2)")]
         public decimal Custo { get; set; }
         public bool Ativo { get; set; }
+        // public string ISBN { get; set; }
     }
 }

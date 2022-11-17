@@ -26,4 +26,12 @@
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\_NotificationPartial.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\Components\Default.cshtml" />
+  </ItemGroup>
+
 </Project>

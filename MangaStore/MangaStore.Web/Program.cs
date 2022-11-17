@@ -11,6 +11,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         config.ExpireTimeSpan = TimeSpan.FromHours(1);
     });
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -35,6 +43,7 @@ app.UseCookiePolicy(new CookiePolicyOptions
     HttpOnly = HttpOnlyPolicy.Always
 });
 
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

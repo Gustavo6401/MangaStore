@@ -37,18 +37,18 @@
                         }                        
                     </ul>
                     <div class="align-self-end">
-                    <ul class="navbar-nav">
-                        @if(User.IsInRole("Cliente"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-item text-dark">@User.Identity.Name</a>
-                            </li>
+                        <ul class="navbar-nav">
+                            @if(User.IsInRole("Cliente"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-item text-dark">@User.Identity.Name</a>
+                                </li>
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Login">Fazer Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark">
+                            <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="Index">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
                         </li>
@@ -60,6 +60,12 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @*<div class="col-md-3 align-self-end">
+                <div class="bg-warning mt-3 p-3 text-black">
+                    <vc:carrinho />
+                </div>
+            </div>*@
+            <partial name="_NotificationPartial"/>
             @RenderBody()
         </main>
     </div>

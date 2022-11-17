@@ -53,11 +53,7 @@
                         <p class="card-text">@Html.DisplayFor(modelItem => item.DescricaoDetalhada)</p>
                     </div>
                     <div class="card-footer">
-                        <form class="d-block">
-                            <button class="btn btn-warning">
-                                Adicionar ao Carrinho
-                            </button>
-                        </form>
+                        <a class="btn btn-warning" asp-controller="Produto" asp-action="Details" asp-route-id="@item.Id">Adicionar Ao Carrinho</a>
                         <small>
                             @Html.DisplayFor(modelItem => item.QtdEstoque)
                         </small>

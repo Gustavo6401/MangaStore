@@ -7,28 +7,29 @@ using MangaStore.Web.Models.Contexto;
 using MangaStore.Web.Models.ViewModels;
 using MangaStore.Web.Repositories;
 using MangaStore.Web.Services.Criptografia;
+using MangaStore.Web.Services.Secao;
 
 namespace MangaStore.Web.Controllers
 {
     public class ClienteController : Controller
     {
         MangaContext _context = new MangaContext();
-        List<EnderecoCliente> listaEnderecos = new List<EnderecoCliente>();
+        List<EnderecoCliente> _listaEnderecos;
         public IActionResult Index()
         {
             List<UsuarioCliente> usuarioCliente = _context.UsuarioCliente.ToList();
             return View(usuarioCliente);
         }
-
+        
+        [HttpGet]
         public IActionResult Create() => View();
         
         // Essa parte ficou foda!
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Usuario,Cliente,Endereco")] ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> Create([Bind("Usuario,Cliente,ListaEnderecos,Endereco")] CadastrarClienteViewModel clienteViewModel)
         {
             Usuario usuario = clienteViewModel.Usuario;
             Cliente cliente = clienteViewModel.Cliente;
-            EnderecoCliente endereco = clienteViewModel.Endereco;
 
             HashMD5 mD5 = new HashMD5();
             usuario.Senha = mD5.Criptografar(usuario.Senha);
@@ -58,21 +59,27 @@ namespace MangaStore.Web.Controllers
             ClienteRepository repository = new ClienteRepository();
             repository.Add(cliente);
 
-            endereco.ClienteId = cliente.Id;
-
             EnderecoClienteRepository enderecoClienteRepository = new EnderecoClienteRepository();
+
+            _listaEnderecos = HttpContext.Session.GetJson<List<EnderecoCliente>>("Endereco");
             
-            foreach(var item in listaEnderecos)
+            foreach(var item in _listaEnderecos)
             {
+                item.ClienteId = cliente.Id;
+
                 enderecoClienteRepository.Add(item);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AdicionarEndereco([Bind("Id,CEP,Rua,Bairro,Cidade,UF,Numero,ClienteId")] EnderecoCliente endereco)
+        public IActionResult AdicionarEndereco([Bind("Usuario,Cliente,ListaEnderecos,Endereco")] CadastrarClienteViewModel vm)
         {
-            listaEnderecos.Add(endereco);
+            // Eu decidi salvar os endereços na sessão, tentei com variáveis, mas nada deu certo.
+            _listaEnderecos = HttpContext.Session.GetJson<List<EnderecoCliente>>("Endereco") ?? new List<EnderecoCliente>();
+            _listaEnderecos.Add(vm.Endereco);
+
+            HttpContext.Session.SetJson("Endereco", _listaEnderecos);
 
             return RedirectToAction("Create","Cliente");
         }
@@ -118,7 +125,7 @@ namespace MangaStore.Web.Controllers
 
             EnderecoClienteRepository enderecoClienteRepository = new EnderecoClienteRepository();
 
-            foreach (var item in listaEnderecos)
+            foreach (var item in _listaEnderecos)
             {
                 enderecoClienteRepository.Update(item);
             }

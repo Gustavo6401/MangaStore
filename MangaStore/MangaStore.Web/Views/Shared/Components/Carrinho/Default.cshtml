@@ -1,0 +1,13 @@
+﻿@model MangaStore.Web.Models.ViewModels.CarrinhoPequenoViewModel;
+
+@if(Model != null)
+{
+    <p>Itens no Carrinho: <span class="badge badge-primary">@Model.NumeroItens</span></p>
+    <p>Total: <b>@Model.ValorTotal.ToString("C2")</b></p>
+    <a href="#" class="btn btn-primary mb-2" asp-controller="Carrinho" asp-action="Index">Ver Itens</a>
+    <a href="#" class="btn btn-danger mb-2" asp-controller=Carrinho asp-action=Clear>Limpar Carrinho</a>
+}
+else 
+{
+    <p class="lead md-0">Seu Carrinho Está Vazio</p>
+}

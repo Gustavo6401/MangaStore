@@ -2,5 +2,5 @@
 
 public interface ICalculoPorQtdItens
 {
-    
+    public decimal Calculo(int qtdItens);
 }

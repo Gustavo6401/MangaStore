@@ -5,5 +5,6 @@ namespace MangaStore.Web.Interfaces.Repositories
 {
     public interface IEnderecoClienteRepository : IRepository<EnderecoCliente>
     {
+        public List<EnderecoCliente> GetByClienteId(int id);
     }
 }

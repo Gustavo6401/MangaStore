@@ -11,6 +11,8 @@ namespace MangaStore.Web.Models.Contexto
         public DbSet<ImagensProduto> ImagensProduto { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<EnderecoCliente> EnderecoCliente { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<ProdutoPedido> ProdutoPedido { get; set; }
         public DbSet<UsuarioCliente> UsuarioCliente { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

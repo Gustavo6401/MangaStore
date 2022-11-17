@@ -51,7 +51,7 @@ namespace MangaStore.Web.Controllers
 
             repository.Update(usuario);
 
-            return RedirectToAction("Index", "Usuario");
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize]

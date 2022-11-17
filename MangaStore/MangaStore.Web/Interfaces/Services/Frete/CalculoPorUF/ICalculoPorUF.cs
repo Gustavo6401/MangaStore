@@ -2,5 +2,5 @@
 
 public interface ICalculoPorUF
 {
-    
+    public decimal Calculo(string uf);
 }

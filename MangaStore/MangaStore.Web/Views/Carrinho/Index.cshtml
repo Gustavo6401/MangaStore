@@ -1,18 +1,37 @@
-﻿@model TModel
+﻿@model CarrinhoViewModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Carrinho";
 }
 
-<!DOCTYPE html>
+<h1>Overview</h1>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+@if (Model.Itens.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th></th>
+            <th>Preço</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var item in Model.Itens)
+        {
+            <tr>
+                <td>@item.NomeProduto</td>
+                <td>@item.Qtd</td>
+                <td>
+                    <a class="btn btn-success btn-sm" asp-action="Add" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>+</a>
+                    <a class="btn btn-primary btn-sm" asp-action="Decrease" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>-</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Remove" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>Remover</a>
+                </td>
+                <td>@item.Preco.ToString("C2")</td>
+                <td>@Model.Itens.Where(x => x.ProdutoId == item.ProdutoId).Sum(x => x.Qtd * x.Preco).ToString("C2")</td>
+            </tr>
+        }
+        <tr>
+            <td class="text-right" colspan="4">Total: @Model.Total.ToString("C2") e o frete fica por @Model.Frete.ToString("C2")</td>
+        </tr>
+    </table>
+}

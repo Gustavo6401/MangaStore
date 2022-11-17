@@ -98,6 +98,9 @@ namespace MangaStore.Web.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("EnderecoPadrao")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
@@ -160,6 +163,34 @@ namespace MangaStore.Web.Migrations
                     b.ToTable("ImagensProduto");
                 });
 
+            modelBuilder.Entity("MangaStore.Web.Models.Pedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataPedido")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FormaPagamento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Pedido");
+                });
+
             modelBuilder.Entity("MangaStore.Web.Models.Produto", b =>
                 {
                     b.Property<int>("Id")
@@ -194,6 +225,32 @@ namespace MangaStore.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Produto");
+                });
+
+            modelBuilder.Entity("MangaStore.Web.Models.ProdutoPedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QtdComprada")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("ProdutoPedido");
                 });
 
             modelBuilder.Entity("MangaStore.Web.Models.Usuario", b =>
@@ -337,6 +394,36 @@ namespace MangaStore.Web.Migrations
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Produto");
+                });
+
+            modelBuilder.Entity("MangaStore.Web.Models.Pedido", b =>
+                {
+                    b.HasOne("MangaStore.Web.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("MangaStore.Web.Models.ProdutoPedido", b =>
+                {
+                    b.HasOne("MangaStore.Web.Models.Pedido", "Pedido")
+                        .WithMany()
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MangaStore.Web.Models.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
 
                     b.Navigation("Produto");
                 });
