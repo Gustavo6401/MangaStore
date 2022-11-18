@@ -16,7 +16,7 @@ namespace MangaStore.Web.Services.CEP
 
             dynamic response = JsonConvert.DeserializeObject(respostaJson);
 
-            return response.state;
+            return response.uf;
         }
     }
 }

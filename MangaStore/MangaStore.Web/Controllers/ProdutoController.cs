@@ -10,6 +10,7 @@ using X.PagedList;
 using MangaStore.Web.Models;
 using MangaStore.Web.Models.Contexto;
 using MangaStore.Web.Repositories;
+using MangaStore.Web.Services.Image;
 
 namespace MangaStore.Web.Controllers
 {
@@ -24,6 +25,7 @@ namespace MangaStore.Web.Controllers
         }
 
         // GET: Produto
+        [Authorize(Roles = "Administrador,Estoquista")]
         public async Task<IActionResult> Index(int? pagina)
         {
             if (User.Identity.IsAuthenticated)
@@ -44,7 +46,7 @@ namespace MangaStore.Web.Controllers
                                                                                     .OrderByDescending(t => t.Id)
                                                                                     .ToPagedList());
 
-        // GET: Produto/Details/5
+        // GET: Produto/Details/5        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Produto == null)
@@ -68,6 +70,7 @@ namespace MangaStore.Web.Controllers
         }
 
         // GET: Produto/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -81,86 +84,23 @@ namespace MangaStore.Web.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Avaliacao,DescricaoDetalhada,Preco,QtdEstoque,Custo,Ativo")] Produto produto, List<IFormFile> files)
         {
-            ImagensProduto image = new ImagensProduto();
-
             if (ModelState.IsValid)
             {
                 // Terei que criar um Repository para Lidar com Isso.
                 ProdutoRepository repository = new ProdutoRepository();
-                repository.Add(produto);
+                repository.Add(produto);                
 
-                ImagensProdutoRepository imagensProdutoRepository = new ImagensProdutoRepository();
+                ImageServices services = new ImageServices();
+                var nomeArquivo = await services.MandarImagem(files, _appEnvironment);
+                await services.MandarParaBancoDados(files, nomeArquivo, produto.Id);                
 
-                long fileLength = files.Sum(t => t.Length);
-
-                var filePath = Path.GetTempFileName();
-
-                foreach (var file in files)
-                {
-                    if (file == null || file.Length == 0)
-                    {
-                        ViewData["Erro"] = "Erro: Arquivos não selecionados";
-
-                        return View();
-                    }
-                    string folder = "Arquivos_Usuário";
-                    string fileName = "UserFile_" + DateTime.Now.Millisecond.ToString();
-
-                    if (file.FileName.Contains(".jpg"))
-                    {
-                        fileName += ".jpg";
-                    }
-                    else if (file.FileName.Contains(".gif"))
-                    {
-                        fileName += ".gif";
-                    }
-                    else if (file.FileName.Contains(".png"))
-                    {
-                        fileName += ".png";
-                    }
-                    else if (file.FileName.Contains(".pdf"))
-                    {
-                        fileName += ".pdf";
-                    }
-                    else if (file.FileName.Contains(".jpeg"))
-                    {
-                        fileName += ".jpeg";
-                    }
-                    else
-                    {
-                        fileName += ".tmp";
-                    }
-                    string path_WebRoot = _appEnvironment.WebRootPath;
-                    string pathDestinyFile = path_WebRoot + "\\Files\\" + folder;
-
-                    string originalPathFileDestiny = pathDestinyFile + "\\Recieved\\" + fileName;
-
-                    using (var stream = new FileStream(originalPathFileDestiny, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
-                    image.CaminhoRelativo = originalPathFileDestiny;
-
-                    if(files.Count == 0)
-                    {
-                        image.ImagemPadrao = true;
-                    }
-                    else
-                    {
-                        image.ImagemPadrao = false;
-                    }
-                    
-                    image.ProdutoId = produto.Id;
-
-                    imagensProdutoRepository.Add(image);
-                }
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
         }
 
         // GET: Produto/Edit/5
+        [Authorize(Roles = "Administrador,Estoquista")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Produto == null)

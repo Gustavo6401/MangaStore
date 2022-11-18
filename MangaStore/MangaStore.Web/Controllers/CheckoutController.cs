@@ -17,18 +17,10 @@ namespace MangaStore.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
             List<ItemCarrinho> listaItens = HttpContext.Session.GetJson<List<ItemCarrinho>>("Carrinho");
 
             FreteServices freteServices = new FreteServices();
 
-            checkoutViewModel.Carrinho.Itens = listaItens;
-            checkoutViewModel.Carrinho.Total = listaItens.Sum(x => x.Qtd * x.Preco);
-            checkoutViewModel.Carrinho.Frete = HttpContext.Session.GetJson<decimal>("Frete");
-
-            checkoutViewModel.Total = checkoutViewModel.Carrinho.Frete + checkoutViewModel.Carrinho.Total;
-
-            // Tudo isso é para buscar a lista de endereços.
             ClaimServices claimServices = new ClaimServices();
             int idUsuario = Convert.ToInt32(claimServices.RetornarClaim(HttpContext));
 
@@ -38,13 +30,28 @@ namespace MangaStore.Web.Controllers
             EnderecoClienteRepository enderecoClienteRepository = new EnderecoClienteRepository();
             List<EnderecoCliente> listaEnderecos = enderecoClienteRepository.GetByClienteId(cliente.Id);
 
-            checkoutViewModel.ListaEnderecos = listaEnderecos;
+            CheckoutViewModel checkoutViewModel;
+            CarrinhoViewModel carrinho;
+
+            carrinho = new CarrinhoViewModel()
+            {
+                Itens = listaItens,
+                Total = listaItens.Sum(x => x.Qtd * x.Preco),
+                Frete = HttpContext.Session.GetJson<decimal>("Frete")
+            };
+
+            checkoutViewModel = new CheckoutViewModel()
+            {
+                Carrinho = carrinho,
+                Total = carrinho.Frete + carrinho.Total,
+                ListaEnderecos = listaEnderecos                
+            };
 
             return View(checkoutViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SelecionarEndereco(string cep, bool selecionado, int total)
+        public async Task<ActionResult> SelecionarEndereco(string cep, bool selecionado, int total)
         {
             CEPServices cepServices = new CEPServices();
             string uf = cepServices.BuscarUF(cep);

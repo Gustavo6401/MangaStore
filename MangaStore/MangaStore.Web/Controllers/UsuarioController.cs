@@ -21,7 +21,7 @@ namespace MangaStore.Web.Controllers
         private UsuarioRepository _repository = new UsuarioRepository();
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         // GET: Usuario
         public async Task<IActionResult> Index(int? pagina)
         {
@@ -54,7 +54,7 @@ namespace MangaStore.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         // GET: Usuario/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -203,7 +203,7 @@ namespace MangaStore.Web.Controllers
             }*/
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         // GET: Usuario/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -287,6 +287,7 @@ namespace MangaStore.Web.Controllers
         }
 
         // GET: Usuario/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Usuario == null)

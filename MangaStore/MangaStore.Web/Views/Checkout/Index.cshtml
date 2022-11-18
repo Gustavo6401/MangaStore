@@ -11,7 +11,7 @@
 <section>
     @if(Model.Carrinho.Itens.Count > 0)
     {
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Produto</th>
@@ -32,12 +32,12 @@
                             <a class="btn btn-primary btn-sm" asp-action="Decrease" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>-</a>
                             <a class="btn btn-danger btn-sm" asp-action="Remove" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>Remover</a>
                         </td>
-                        <td>R$ @item.Preco.ToString("C2")</td>
-                        <td>R$ @Model.Carrinho.Itens.Where(x => x.ProdutoId == item.ProdutoId).Sum(x => x.Qtd * x.Preco).ToString("C2")</td>
+                        <td>@item.Preco.ToString("C2")</td>
+                        <td>@Model.Carrinho.Itens.Where(x => x.ProdutoId == item.ProdutoId).Sum(x => x.Qtd * x.Preco).ToString("C2")</td>
                     </tr>
             }
             <tr>
-                <td class="text-right" colespan="4">Total: R$ @Model.Carrinho.Total.ToString("C2")</td>
+                <td class="text-right" colespan="4">Total: @Model.Carrinho.Total.ToString("C2")</td>
             </tr>
         </tbody>
     </table>
@@ -47,7 +47,7 @@
 <section>
     @if(Model.ListaEnderecos.Count > 0) 
     {
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th></th>
@@ -64,16 +64,19 @@
                 @foreach(var item in Model.ListaEnderecos)
                 {
                     <tr>
-                        <form asp-action="SelecionarEndereco">
-                            <td>Selecionado? 
-                                <input id="check" type="checkbox" name="selecionado" />
-                            </td>
-                            <td>
-                                <input asp-for="@(item.CEP)" name="cep" readonly>
-                                @*Eu coloquei esse input para ele ser passado junto com a seleção do endereço.*@
+                        <td>
+                            Selecionado?
+                            <form asp-action=SelecionarEndereco>
+                                <input name="selecionado" class="form-check-input" onclick="SelecionarEndereco()" id="check" type="checkbox" />
+                                <input asp-for="@(item.CEP)" name="cep" readonly type=hidden>
                                 <input class="d-none" type="number" asp-for=Carrinho.Total name="total">
-                            </td>
-                        </form>
+                            </form>
+                        </td>
+                        <td>
+                            <input asp-for="@(item.CEP)" name="cep" readonly>
+                            @*Eu coloquei esse input para ele ser passado junto com a seleção do endereço.*@
+                            <input class="d-none" type="number" asp-for=Carrinho.Total name="total">
+                        </td>
                         <td>
                             @Html.DisplayFor(model => item.Rua)
                         </td>
@@ -99,9 +102,9 @@
     }
 </section>
 <section>
-    <h5>Total: R$ @Model.Carrinho.Total.ToString("C2")</h5>
-    <h5>Frete: R$ @Model.Carrinho.Frete.ToString("C2")</h5>
-    <h2>Total: R$ @Model.Total.ToString("C2")</h2>
+    <h5>Total: @Model.Carrinho.Total.ToString("C2")</h5>
+    <h5>Frete: @Model.Carrinho.Frete.ToString("C2")</h5>
+    <h2>Total: @Model.Total.ToString("C2")</h2>
 </section>
 <section>
     <form asp-action="Pagar">
@@ -131,7 +134,7 @@
 @section Scripts {
     <script language="JavaScript" type="text/javascript">
         $(function () {
-            $('#check').change(function() {
+            $("#check").change(function() {
                 $(this).closest('form').submit();
             })
         })
