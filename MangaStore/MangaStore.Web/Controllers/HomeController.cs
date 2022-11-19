@@ -1,18 +1,41 @@
-﻿using MangaStore.Web.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using X.PagedList;
-using MangaStore.Web.Models.Contexto;
+using MangaStore.Web.Repositories;
+using MangaStore.Web.Models;
+using MangaStore.Web.Models.ViewModels;
 
 namespace MangaStore.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private MangaContext _context = new MangaContext();
+        public IActionResult Index()
+        {
+            ProdutoRepository repository = new ProdutoRepository();
+            List<Produto> listaProdutos = repository.Get();
 
-        public IActionResult Index(int? pagina) => View(_context.Produto.OrderByDescending(t => t.Id)
-                                                                        .ToPagedList(pagina ?? 1, 12));
+            ImagensProdutoRepository imagensProdutoRepository = new ImagensProdutoRepository();
+            List<ImagensProduto> listaImagem = imagensProdutoRepository.Get();
+
+            List<ImagensProduto> auxiliar = new List<ImagensProduto>();
+
+            foreach(var item in listaImagem)
+            {
+                if(item.ImagemPadrao == true)
+                {
+                    auxiliar.Add(item);
+                }
+            }
+
+            ImageProdutoViewModel vm = new ImageProdutoViewModel()
+            {
+                ListaProdutos = listaProdutos,
+                ListaImagensProduto = listaImagem
+            };
+
+            return View(vm);
+        }
 
         public IActionResult Privacy()
         {

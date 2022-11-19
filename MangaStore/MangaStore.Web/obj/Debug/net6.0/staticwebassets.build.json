@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JlUAbaEwqLAnIhHvZlSJaE2Byyl2r7FTHezW1eLRG4E=",
+  "Hash": "nnhJneN4d7Zm0WqmBH8ehVun4uYy4KZenjCjrrhXG2I=",
   "Source": "MangaStore.Web",
   "BasePath": "_content/MangaStore.Web",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_111.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_125.jpg",
+      "SourceId": "MangaStore.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\",
+      "BasePath": "_content/MangaStore.Web",
+      "RelativePath": "Files/Arquivos_Usuário/Recieved/UserFile_125.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_125.jpg"
     },
     {
       "Identity": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_130.jpg",
@@ -593,6 +610,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_994.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_sexta-feira 18 de novembro de 2022 203655.jpg",
+      "SourceId": "MangaStore.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\",
+      "BasePath": "_content/MangaStore.Web",
+      "RelativePath": "Files/Arquivos_Usuário/Recieved/UserFile_sexta-feira 18 de novembro de 2022 203655.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Arquivos_Usuário\\Recieved\\UserFile_sexta-feira 18 de novembro de 2022 203655.jpg"
     },
     {
       "Identity": "C:\\Users\\Gustavo\\Documents\\Gustavo TI\\Programação\\Faculdade\\Projeto Integrador\\MangaStore\\MangaStore\\MangaStore.Web\\wwwroot\\js\\site.js",

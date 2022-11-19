@@ -47,13 +47,14 @@ namespace MangaStore.Web.Services.Image
                 {
                     fileName += ".tmp";
                 }
+                string path_WebRoot = AppEnviroment.WebRootPath;
+                string pathDestinyFile = path_WebRoot + "\\Files\\" + folder;
 
-                string pathDestinyFile = AppEnviroment + "\\Files\\" + folder;
-                string originalPathFileDestiny = pathDestinyFile + "\\Recieved\\" + fileName;
+                string originalPathFileDestiny = pathDestinyFile + "\\Recieved\\";
 
-                using(var stream = new FileStream(originalPathFileDestiny, FileMode.Create))
+                using (var stream = new FileStream(originalPathFileDestiny, FileMode.Create))
                 {
-                    await file.CopyToAsync(stream);
+                    file.CopyToAsync(stream);
                 }
                 return fileName;
             }

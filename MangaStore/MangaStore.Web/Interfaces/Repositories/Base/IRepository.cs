@@ -2,7 +2,7 @@
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        IAsyncEnumerable<T> Get();
+        List<T> Get();
         void Add(T item);
         void Update(T item);
         void Delete(T item);

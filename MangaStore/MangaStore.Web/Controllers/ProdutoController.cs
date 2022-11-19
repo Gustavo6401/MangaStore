@@ -84,15 +84,84 @@ namespace MangaStore.Web.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Avaliacao,DescricaoDetalhada,Preco,QtdEstoque,Custo,Ativo")] Produto produto, List<IFormFile> files)
         {
+            ImagensProduto image = new ImagensProduto();
+
             if (ModelState.IsValid)
             {
                 // Terei que criar um Repository para Lidar com Isso.
                 ProdutoRepository repository = new ProdutoRepository();
-                repository.Add(produto);                
+                repository.Add(produto);
 
-                ImageServices services = new ImageServices();
-                var nomeArquivo = await services.MandarImagem(files, _appEnvironment);
-                await services.MandarParaBancoDados(files, nomeArquivo, produto.Id);                
+                ImagensProdutoRepository imagensProdutoRepository = new ImagensProdutoRepository();
+
+                long fileLength = files.Sum(t => t.Length);
+
+                var filePath = Path.GetTempFileName();
+
+                foreach (var file in files)
+                {
+                    if (file == null || file.Length == 0)
+                    {
+                        ViewData["Erro"] = "Erro: Arquivos não selecionados";
+
+                        return View();
+                    }
+                    string folder = "Arquivos_Usuário";
+                    string fileName = "UserFile_" + DateTime.Now.ToString("F");
+
+                    fileName = fileName.Replace(",", string.Empty);
+                    fileName = fileName.Replace("/", string.Empty);
+                    fileName = fileName.Replace(":", string.Empty);
+
+                    if (file.FileName.Contains(".jpg"))
+                    {
+                        fileName += ".jpg";
+                    }
+                    else if (file.FileName.Contains(".gif"))
+                    {
+                        fileName += ".gif";
+                    }
+                    else if (file.FileName.Contains(".png"))
+                    {
+                        fileName += ".png";
+                    }
+                    else if (file.FileName.Contains(".pdf"))
+                    {
+                        fileName += ".pdf";
+                    }
+                    else if (file.FileName.Contains(".jpeg"))
+                    {
+                        fileName += ".jpeg";
+                    }
+                    else
+                    {
+                        fileName += ".tmp";
+                    }
+                    string path_WebRoot = _appEnvironment.WebRootPath;
+                    string pathDestinyFile = path_WebRoot + "\\Files\\" + folder;
+
+                    string originalPathFileDestiny = pathDestinyFile + "\\Recieved\\" + fileName;
+
+                    using (var stream = new FileStream(originalPathFileDestiny, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    image.CaminhoRelativo = fileName;
+
+                    if (files.Count == 0)
+                    {
+                        image.ImagemPadrao = true;
+                    }
+                    else
+                    {
+                        image.ImagemPadrao = false;
+                    }
+
+                    image.ProdutoId = produto.Id;
+
+                    imagensProdutoRepository.Add(image);
+                }
 
                 return RedirectToAction(nameof(Index));
             }

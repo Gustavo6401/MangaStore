@@ -25,7 +25,7 @@ namespace MangaStore.Web.Repositories.Base
             throw new NotImplementedException();
         }
 
-        public IAsyncEnumerable<T> Get() => Db.Set<T>().AsAsyncEnumerable();
+        public List<T> Get() => Db.Set<T>().ToList();
 
         public void Update(T item)
         {

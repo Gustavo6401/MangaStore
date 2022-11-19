@@ -271,3 +271,4 @@ C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Linq.Async.dll
