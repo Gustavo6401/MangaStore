@@ -266,12 +266,12 @@ namespace MangaStore.Web.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> AtivarProduto(int id, bool ativo)
+        public async Task<IActionResult> AtivarProduto(int mainid, bool chkativo)
         {
             ProdutoRepository repository = new ProdutoRepository();
-            Produto produto = repository.GetById(id);
+            Produto produto = repository.GetById(mainid);
 
-            produto.Ativo = ativo;
+            produto.Ativo = chkativo;
             
             repository.Update(produto);
 

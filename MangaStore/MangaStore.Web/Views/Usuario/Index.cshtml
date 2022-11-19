@@ -27,78 +27,78 @@
     </div>
 </form>
 <div class="table-responsive">
-    <table id="myTable" class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    E-Mail
-                </th>
-                <th>
-                    Senha
-                </th>
-                <th>
-                    Telefone
-                </th>
-                <th>
-                    Permissão
-                </th>
-                <th>
-                    Ativo
-                </th>
-                <th>
-                    CPF
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model) 
-            {                
+        <table id="myTable" class="table">
+            <thead>
                 <tr>
-                    <td>
-                        <input asp-for=@(item.Id) name=id readonly />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EMail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Senha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telefone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Permisao)
-                    </td>
-                    <td>
-                        <form asp-action=AtivarUsuario>
-                            <input type="hidden" asp-for=@(item.Id) name=id />
-                            <input asp-for=@(item.Ativo) name=ativo onclick="AtivarUsuario()" class="form-check-input" id="check" type="checkbox" />
-                        </form>
-                    </td>
-                    <td>
-                            @Html.DisplayFor(modelItem => item.CPF)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        E-Mail
+                    </th>
+                    <th>
+                        Senha
+                    </th>
+                    <th>
+                        Telefone
+                    </th>
+                    <th>
+                        Permissão
+                    </th>
+                    <th>
+                        Ativo
+                    </th>
+                    <th>
+                        CPF
+                    </th>
+                    <th></th>
                 </tr>
-                
-            }        
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input asp-for=@(item.Id) name=id readonly />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EMail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Senha)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Permisao)
+                        </td>
+                        <td>
+                            <form method="post" asp-action="AtivarUsuario">
+                                <input type="hidden" name=mainid value=@item.Id />
+                                <input asp-for=@(item.Ativo) name=chkativo class="form-check-input" id="check" type="checkbox" />
+                            </form>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CPF)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
 
 <div class="row">
     <div class="col-md-8">
@@ -123,7 +123,7 @@
 @section Scripts {
     <script language="JavaScript" type="text/javascript">
         $(function () {
-            $("#check").change(function() {
+            $(".form-check-input").change(function() {
                 $(this).closest('form').submit();
             })
         })

@@ -69,7 +69,7 @@
                             <form asp-action=SelecionarEndereco>
                                 <input name="selecionado" class="form-check-input" onclick="SelecionarEndereco()" id="check" type="checkbox" />
                                 <input asp-for="@(item.CEP)" name="cep" readonly type=hidden>
-                                <input class="d-none" type="number" asp-for=Carrinho.Total name="total">
+                                <input class="d-none" type="number" asp-for=@Model.Carrinho.Total value=@Model.Carrinho.Total name="total">
                             </form>
                         </td>
                         <td>
@@ -134,7 +134,7 @@
 @section Scripts {
     <script language="JavaScript" type="text/javascript">
         $(function () {
-            $("#check").change(function() {
+            $(".form-check-input").change(function() {
                 $(this).closest('form').submit();
             })
         })

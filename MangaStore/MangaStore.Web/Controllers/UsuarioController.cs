@@ -42,12 +42,12 @@ namespace MangaStore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AtivarUsuario(int id, bool ativo)
+        public async Task<ActionResult> AtivarUsuario(int mainid, bool chkativo)
         {
             UsuarioRepository repository = new UsuarioRepository();
-            Usuario usuario = repository.GetUsuario(id);
+            Usuario usuario = repository.GetUsuario(mainid);
 
-            usuario.Ativo = ativo;
+            usuario.Ativo = chkativo;
 
             repository.Update(usuario);
 
@@ -235,7 +235,7 @@ namespace MangaStore.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EMail,Telefone,Senha,Permisao,Ativo,CPF")] EditarUsuarioViewModel usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EMail,Senha,Telefone,Permisao,Ativo,CPF,Usuario")] EditarUsuarioViewModel usuario)
         {
             try
             {
@@ -244,36 +244,33 @@ namespace MangaStore.Web.Controllers
                     return NotFound();
                 }
 
-                if (ModelState.IsValid)
+                try
                 {
-                    try
+                    Usuario model = new Usuario();
+                    model.Id = usuario.Id;
+                    model.Nome = usuario.Nome;
+                    model.EMail = usuario.EMail;
+                    model.CPF = usuario.CPF;
+                    model.Permisao = usuario.Permisao;
+                    model.Ativo = usuario.Ativo;
+
+                    if (usuario.Senha != null)
                     {
-                        Usuario model = new Usuario();
-                        model.Id = usuario.Id;
-                        model.Nome = usuario.Nome;
-                        model.EMail = usuario.EMail;
-                        model.CPF = usuario.CPF;
-                        model.Permisao = usuario.Permisao;
-                        model.Ativo = usuario.Ativo;
-                        
-                        if(usuario.Senha != null)
-                        {
-                            HashMD5 mD5 = new HashMD5();
-                            usuario.Senha = mD5.Criptografar(usuario.Senha);
-                            
-                            model.Senha = usuario.Senha;
-                        }
+                        HashMD5 mD5 = new HashMD5();
+                        usuario.Senha = mD5.Criptografar(usuario.Senha);
 
-                        _repository.Update(model);
-
-                        return RedirectToAction(nameof(Index));
+                        model.Senha = usuario.Senha;
                     }
-                    catch (DbUpdateConcurrencyException)
+
+                    _repository.Update(model);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(usuario.Id))
                     {
-                        if (!UsuarioExists(usuario.Id))
-                        {
-                            return NotFound();
-                        }
+                        return NotFound();
                     }
                 }
                 return View(usuario);

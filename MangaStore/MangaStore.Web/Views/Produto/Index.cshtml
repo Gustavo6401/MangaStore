@@ -77,8 +77,8 @@
             </td>
             <td>
                 <form asp-action="AtivarProduto">
-                    <input type="hidden" asp-for="@(item.Id)" name="id" />
-                    <input asp-for="@(item.Ativo)" onclick="AtivarProduto()" class="form-check-input" id="check" type="checkbox" />
+                    <input type="hidden" asp-for="@(item.Id)" name="mainid" />
+                    <input asp-for="@(item.Ativo)" onclick="AtivarProduto()" name=chkativo class="form-check-input" id="check" type="checkbox" />
                 </form>
             </td>
             <td>
@@ -102,7 +102,7 @@
 @section Scripts {
     <script language="JavaScript" type="text/javascript">
         $(function() {
-            $("#check").change(function () {
+            $(".form-check-input").change(function () {
                 $(this).closest('form').submit();
             })
         })
