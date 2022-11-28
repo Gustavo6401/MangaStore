@@ -9,6 +9,7 @@
 
         public Cliente Cliente { get; set; }
         public List<EnderecoCliente> ListaEnderecos { get; set; }
+        public EnderecoCliente EnderecoSelecionado { get; set; }
         public CarrinhoViewModel Carrinho { get; set; }
     }
 }

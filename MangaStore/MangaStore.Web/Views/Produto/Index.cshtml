@@ -1,12 +1,19 @@
-﻿@using X.PagedList.Mvc.Core
-@using Microsoft.AspNetCore.Razor.Language
-@using Microsoft.AspNetCore.Http.Features
-@using NuGet.Configuration
+﻿@using MangaStore.Web.Models.Pagination
 
-@model X.PagedList.IPagedList<MangaStore.Web.Models.Produto>
+@model List<MangaStore.Web.Models.Produto>
 
 @{
     ViewData["Title"] = "Index";
+
+    Pager pager = new Pager();
+    
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = ViewBag.CurrentPage;
+    }
 }
 
 <h1>Index</h1>
@@ -95,8 +102,27 @@
 </table>
 
 <div class="row">
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-    of @Model.PageCount   @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @for (var pge = pager.StartPage; pge <= pager.CurrentPage; pge++)
+            {
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(pager.TotalPages)">Última</a>
+                </li>
+            }
+        </ul>
+    }
 </div>
 
 @section Scripts {

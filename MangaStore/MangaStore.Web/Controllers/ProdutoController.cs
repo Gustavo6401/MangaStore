@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 using MangaStore.Web.Models;
 using MangaStore.Web.Models.Contexto;
+using MangaStore.Web.Models.Pagination;
 using MangaStore.Web.Repositories;
 using MangaStore.Web.Services.Image;
 
@@ -26,25 +27,58 @@ namespace MangaStore.Web.Controllers
 
         // GET: Produto
         [Authorize(Roles = "Administrador,Estoquista")]
-        public async Task<IActionResult> Index(int? pagina)
+        public async Task<IActionResult> Index(int pagina)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var produto = await _context.Produto.OrderByDescending(t => t)
-                                                    .ToPagedListAsync(pagina ?? 1, 10);
+            ProdutoRepository repository = new ProdutoRepository();
+            List<Produto> lista = repository.Get();
 
-                return View(produto);
-            }
-            else
+            const int pageSize = 10;
+
+            if (pagina < 1)
             {
-                return RedirectToAction("Login", "Usuario");
+                pagina = 1;
             }
+
+            int produtosContados = lista.Count;
+            var pager = new Pager(produtosContados, pagina, pageSize);
+
+            int produtoSkip = (pagina - 1) * pageSize;
+            lista = lista.Skip(produtoSkip)
+                .Take(pager.PageSize)
+                .ToList();
+
+            ViewBag.Pager = pager;
+            ViewBag.CurrentPage = pagina;
+
+            return View(lista);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string nome) => View(_context.Produto.Where(t => t.Nome.Contains(nome))
-                                                                                    .OrderByDescending(t => t.Id)
-                                                                                    .ToPagedList());
+        public async Task<IActionResult> Index(string nome, int pagina)
+        {
+            ProdutoRepository repository = new ProdutoRepository();
+            List<Produto> lista = repository.BuscarPorNome(nome);
+
+            const int pageSize = 10;
+
+            if (pagina < 1)
+            {
+                pagina = 1;
+            }
+
+            int produtosContados = lista.Count;
+            var pager = new Pager(produtosContados, pagina, pageSize);
+
+            int produtoSkip = (pagina - 1) * pageSize;
+            lista = lista.Skip(produtoSkip)
+                .Take(pager.PageSize)
+                .ToList();
+
+            ViewBag.Pager = pager;
+            ViewBag.CurrentPage = pagina;
+
+            return View(lista);
+        }
 
         // GET: Produto/Details/5        
         public async Task<IActionResult> Details(int? id)

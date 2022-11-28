@@ -5,6 +5,6 @@ namespace MangaStore.Web.Interfaces.Repositories
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {
-
+        public List<Usuario> BuscarPorNome(string nome);
     }
 }

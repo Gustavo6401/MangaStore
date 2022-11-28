@@ -1,9 +1,19 @@
-﻿@using X.PagedList.Mvc.Core
+﻿@using MangaStore.Web.Models.Pagination
 
-@model X.PagedList.IPagedList<MangaStore.Web.Models.Usuario>
+@model List<MangaStore.Web.Models.Usuario>
 
 @{
     ViewData["Title"] = "Index";
+
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = ViewBag.CurrentPage;
+    }
 }
 
 <h1>Index</h1>
@@ -27,98 +37,104 @@
     </div>
 </form>
 <div class="table-responsive">
-        <table id="myTable" class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Nome
-                    </th>
-                    <th>
-                        E-Mail
-                    </th>
-                    <th>
-                        Senha
-                    </th>
-                    <th>
-                        Telefone
-                    </th>
-                    <th>
-                        Permissão
-                    </th>
-                    <th>
-                        Ativo
-                    </th>
-                    <th>
-                        CPF
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <input asp-for=@(item.Id) name=id readonly />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EMail)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Senha)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Telefone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Permisao)
-                        </td>
-                        <td>
-                            <form method="post" asp-action="AtivarUsuario">
-                                <input type="hidden" name=mainid value=@item.Id />
-                                <input asp-for=@(item.Ativo) name=chkativo class="form-check-input" id="check" type="checkbox" />
-                            </form>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CPF)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-
-                }
-            </tbody>
-        </table>
-    </div>
-
-<div class="row">
-    <div class="col-md-8">
-        <ul class="pagination">
-            
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-            of @Model.PageCount   @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
-        </ul>        
-    </div>
+    <table id="myTable" class="table">
+        <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                E-Mail
+            </th>
+            <th>
+                Senha
+            </th>
+            <th>
+                Telefone
+            </th>
+            <th>
+                Permissão
+            </th>
+            <th>
+                Ativo
+            </th>
+            <th>
+                CPF
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input asp-for=@(item.Id) name=id readonly/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Senha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Permisao)
+                </td>
+                <td>
+                    <form method="post" asp-action="AtivarUsuario">
+                        <input type="hidden" name=mainid value=@item.Id/>
+                        <input asp-for=@(item.Ativo) name=chkativo class="form-check-input" id="check" type="checkbox"/>
+                    </form>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
-
-@*
-    <section class="row">
-    <div class="col-md-2">
-        <div id="AtivarUsuario">
-
+<section>
+    <div class="row">
+        <div class="container">
+            @if (pager.TotalPages > 0)
+            {
+                <ul class="pagination justify-content-end">
+                    @for (var pge = pager.StartPage; pge <= pager.CurrentPage; pge++)
+                    {
+                        <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@pge">@pge</a>
+                        </li>
+                    }
+    
+                    @if (pager.CurrentPage < pager.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">Próxima</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(pager.TotalPages)">Última</a>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </div>
 </section>
-*@
 
 @section Scripts {
     <script language="JavaScript" type="text/javascript">

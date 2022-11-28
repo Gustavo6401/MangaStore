@@ -1,0 +1,100 @@
+﻿@model VisualizarPedidoViewModel
+
+@{
+    ViewData["Title"] = "Visualizar Pedido";
+}
+
+<h1>Resumo do Pedido</h1>
+
+<h2>Itens do Carrinho</h2>
+
+<section>
+    @if(Model.Carrinho.Itens.Count > 0)
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th></th>
+                <th>Preço</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Carrinho.Itens)
+            {
+                <tr>
+                    <td>@item.NomeProduto</td>
+                    <td>@item.Qtd</td>
+                    <td>
+                        <a class="btn btn-success btn-sm" asp-action="Add" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>+</a>
+                        <a class="btn btn-primary btn-sm" asp-action="Decrease" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>-</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Remove" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>Remover</a>
+                    </td>
+                    <td>@item.Preco.ToString("C2")</td>
+                    <td>@Model.Carrinho.Itens.Where(x => x.ProdutoId == item.ProdutoId).Sum(x => x.Qtd * x.Preco).ToString("C2")</td>
+                </tr>
+            }
+            <tr>
+                <td class="text-right" colespan="4">Total: @Model.Carrinho.Total.ToString("C2")</td>
+            </tr>
+            </tbody>
+        </table>
+    }
+</section>
+<h2>Endereço de Entrega</h2>
+<section>
+    <dl class="row">
+        <dt class="col-sm-2">
+            CEP
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.CEP)
+        </dd>
+        <dt class="col-sm-2">
+            Rua
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Rua)
+        </dd>
+        <dt class="col-sm-2">
+            Bairro
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Bairro)
+        </dd>
+        <dt class="col-sm-2">
+            Cidade
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Cidade)
+        </dd>
+        <dt class="col-sm-2">
+            UF
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.UF)
+        </dd>
+        <dt class="col-sm-2">
+            Número
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Numero)
+        </dd>
+        <dt class="col-sm-2">
+            Endereço Padrão?
+        </dt>
+        <dd class="col-sm-10">
+            @Html.CheckBoxFor(model => model.Endereco.EnderecoPadrao)
+        </dd>
+    </dl>
+</section>
+<section>
+    <h5>Total: @Model.Carrinho.Total.ToString("C2")</h5>
+    <h5>Frete: @Model.Carrinho.Frete.ToString("C2")</h5>
+    <h3>Total: @Model.Total.ToString("C2")</h3>
+    <h4>Método de Pagamento: @Model.MetodoPagamento</h4>
+</section>
+
+<a class="btn btn-success" asp-action="ConfirmarCompra">Comprar Produto</a>

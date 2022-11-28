@@ -158,7 +158,8 @@ namespace MangaStore.Web.Migrations
                     DataPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FormaPagamento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,6 +170,12 @@ namespace MangaStore.Web.Migrations
                         principalTable: "Cliente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pedido_EnderecoCliente_EnderecoId",
+                        column: x => x.EnderecoId,
+                        principalTable: "EnderecoCliente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,6 +231,11 @@ namespace MangaStore.Web.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pedido_EnderecoId",
+                table: "Pedido",
+                column: "EnderecoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProdutoPedido_PedidoId",
                 table: "ProdutoPedido",
                 column: "PedidoId");
@@ -240,9 +252,6 @@ namespace MangaStore.Web.Migrations
                 name: "Avaliacao");
 
             migrationBuilder.DropTable(
-                name: "EnderecoCliente");
-
-            migrationBuilder.DropTable(
                 name: "Fornecedor");
 
             migrationBuilder.DropTable(
@@ -256,6 +265,9 @@ namespace MangaStore.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Produto");
+
+            migrationBuilder.DropTable(
+                name: "EnderecoCliente");
 
             migrationBuilder.DropTable(
                 name: "Cliente");

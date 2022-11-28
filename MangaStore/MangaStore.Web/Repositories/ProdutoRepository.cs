@@ -12,5 +12,9 @@ namespace MangaStore.Web.Repositories
         {
             return _context.Produto.Find(id);
         }
+
+        public List<Produto> BuscarPorNome(string nome) =>
+            _context.Produto.Where(p => p.Nome.Contains(nome))
+                .ToList();
     }
 }

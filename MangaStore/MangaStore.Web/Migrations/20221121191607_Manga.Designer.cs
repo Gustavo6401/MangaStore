@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MangaStore.Web.Migrations
 {
     [DbContext(typeof(MangaContext))]
-    [Migration("20221116185536_Manga")]
+    [Migration("20221121191607_Manga")]
     partial class Manga
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,9 @@ namespace MangaStore.Web.Migrations
                     b.Property<DateTime>("DataPedido")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FormaPagamento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -189,6 +192,8 @@ namespace MangaStore.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("Pedido");
                 });
@@ -408,7 +413,15 @@ namespace MangaStore.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MangaStore.Web.Models.EnderecoCliente", "EnderecoCliente")
+                        .WithMany()
+                        .HasForeignKey("EnderecoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("EnderecoCliente");
                 });
 
             modelBuilder.Entity("MangaStore.Web.Models.ProdutoPedido", b =>

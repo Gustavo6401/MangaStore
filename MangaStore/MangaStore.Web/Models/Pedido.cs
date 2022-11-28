@@ -12,5 +12,9 @@ namespace MangaStore.Web.Models
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
         public int ClienteId { get; set; }
+        
+        [ForeignKey("EnderecoId")]
+        public EnderecoCliente EnderecoCliente { get; set; }
+        public int EnderecoId { get; set; }
     }
 }

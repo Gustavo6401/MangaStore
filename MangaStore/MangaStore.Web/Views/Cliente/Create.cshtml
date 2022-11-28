@@ -110,22 +110,22 @@
         <form asp-action="AdicionarEndereco">
             <div class="form-group">
                 <label asp-for=Endereco.CEP class="control-label">CEP</label>
-                <input asp-for=Endereco.CEP class="form-control"/>
+                <input asp-for=Endereco.CEP class="form-control" id="cep" onmouseleave="consultarCEP()"/>
                 <span asp-validation-for=Endereco.CEP class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Rua class="control-label">Rua</label>
-                <input asp-for=Endereco.Rua class="form-control"/>
+                <input asp-for=Endereco.Rua class="form-control" id="rua"/>
                 <span asp-validation-for=Endereco.Rua class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Bairro class="control-label">Bairro</label>
-                <input asp-for=Endereco.Bairro class="form-control"/>
+                <input asp-for=Endereco.Bairro class="form-control" id="bairro"/>
                 <span asp-validation-for=Endereco.Bairro class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Cidade class="control-label">Cidade</label>
-                <input asp-for=Endereco.Cidade class="form-control"/>
+                <input asp-for=Endereco.Cidade class="form-control" id="cidade"/>
                 <span asp-validation-for=Endereco.Cidade class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -160,11 +160,12 @@
                     new SelectListItem { Text = "SP" },
                     new SelectListItem { Text = "TO" }
                 })
+                @*Id = Endereco_UF*@
                 <span asp-validation-for=Endereco.UF class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for=Endereco.Numero class="control-label">Número</label>
-                <input asp-for=Endereco.Numero class="form-control" type="number"/>
+                <input asp-for=Endereco.Numero class="form-control" type="number" id="numero"/>
                 <span asp-validation-for=Endereco.Numero class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -184,5 +185,26 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script language="JavaScript" type="text/javascript">
+        function consultarCEP() {
+            var cep = document.querySelector('#cep')
+                .value;
+
+            fetch(`https://viacep.com.br/ws/${cep}/json`)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('#rua')
+                        .value = data.logradouro;
+
+                    document.querySelector('#bairro')
+                        .value = data.bairro;
+
+                    document.querySelector('#cidade')
+                        .value = data.localidade;
+
+                    document.querySelector('#Endereco_UF')
+                        .value = data.uf;
+                });
+        }
+    </script>
 }

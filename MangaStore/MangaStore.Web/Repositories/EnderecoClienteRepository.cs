@@ -10,5 +10,8 @@ namespace MangaStore.Web.Repositories
         MangaContext _context = new MangaContext();
         public List<EnderecoCliente> GetByClienteId(int id) => _context.EnderecoCliente.Where(x => x.ClienteId == id)
                                                                                        .ToList();
+
+        public EnderecoCliente GetById(int id) =>
+            _context.EnderecoCliente.Find(id)!;
     }
 }

@@ -7,5 +7,6 @@ namespace MangaStore.Web.Interfaces.Repositories
     public interface IProdutoRepository : IRepository<Produto>
     {
         public Produto GetById(int id);
+        public List<Produto> BuscarPorNome(string nome);
     }
 }

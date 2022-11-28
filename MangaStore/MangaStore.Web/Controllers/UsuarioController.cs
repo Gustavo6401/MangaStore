@@ -9,6 +9,7 @@ using MangaStore.Web.Services.Criptografia;
 using MangaStore.Web.Models;
 using MangaStore.Web.Models.ViewModels;
 using MangaStore.Web.Models.Contexto;
+using MangaStore.Web.Models.Pagination;
 using MangaStore.Web.Repositories;
 using MangaStore.Web.Services.Autenticacao;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -23,22 +24,57 @@ namespace MangaStore.Web.Controllers
         [HttpGet]
         [Authorize(Roles = "Administrador")]
         // GET: Usuario
-        public async Task<IActionResult> Index(int? pagina)
+        public async Task<IActionResult> Index(int pagina)
         {
-            var usuario = await _context.Usuario.OrderBy(t => t.Id)
-                                                .ToPagedListAsync(pagina ?? 1, 10);
+            UsuarioRepository repository = new UsuarioRepository();
+            List<Usuario> lista = repository.Get();
 
-            return View(usuario);
+            const int pageSize = 10;
+
+            if (pagina < 1)
+            {
+                pagina = 1;
+            }
+
+            int produtosContados = lista.Count;
+            var pager = new Pager(produtosContados, pagina, pageSize);
+
+            int produtoSkip = (pagina - 1) * pageSize;
+            lista = lista.Skip(produtoSkip)
+                .Take(pager.PageSize)
+                .ToList();
+
+            ViewBag.Pager = pager;
+            ViewBag.CurrentPage = pagina;
+
+            return View(lista);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string nome, int? pagina)
+        public async Task<IActionResult> Index(string nome, int pagina = 1)
         {
-            var usuario = _context.Usuario.Where(t => t.Nome.Contains(nome))
-                .OrderBy(t => t.Id)
-                .ToPagedList(pagina ?? 1, 10);
+            UsuarioRepository repository = new UsuarioRepository();
+            List<Usuario> lista = repository.BuscarPorNome(nome);
 
-            return View(usuario);
+            const int pageSize = 10;
+
+            if (pagina < 1)
+            {
+                pagina = 1;
+            }
+
+            int produtosContados = lista.Count;
+            var pager = new Pager(produtosContados, pagina, pageSize);
+
+            int produtoSkip = (pagina - 1) * pageSize;
+            lista = lista.Skip(produtoSkip)
+                .Take(pager.PageSize)
+                .ToList();
+
+            ViewBag.Pager = pager;
+            ViewBag.CurrentPage = pagina;
+
+            return View(lista);
         }
 
         [HttpPost]
@@ -246,8 +282,9 @@ namespace MangaStore.Web.Controllers
 
                 try
                 {
-                    Usuario model = new Usuario();
-                    model.Id = usuario.Id;
+                    UsuarioRepository repository = new UsuarioRepository();
+                    Usuario model = repository.GetUsuario(usuario.Id);
+                    
                     model.Nome = usuario.Nome;
                     model.EMail = usuario.EMail;
                     model.CPF = usuario.CPF;
