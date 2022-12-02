@@ -67,7 +67,7 @@
                         <td>
                             Selecionado?
                             <form asp-action=SelecionarEndereco>
-                                <input name="selecionado" class="form-check-input" onclick="SelecionarEndereco()" id="check" type="checkbox" />
+                                <input name="selecionado" class="form-check-input" onclick="SelecionarEndereco()" id="check" type="radio" />
                                 <input name="enderecoId" type="hidden" asp-for="@(item.Id)" value="@(item.Id)" />
                                 <input asp-for="@(item.CEP)" name="cep" readonly type=hidden>
                                 <input class="d-none" type="number" asp-for=@Model.Carrinho.Total value=@Model.Carrinho.Total name="total">

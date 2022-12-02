@@ -90,8 +90,8 @@
                     @Html.DisplayFor(modelItem => item.Permisao)
                 </td>
                 <td>
-                    <form method="post" asp-action="AtivarUsuario">
-                        <input type="hidden" name=mainid value=@item.Id/>
+                    <form asp-action="AtivarUsuario">
+                        <input name="mainid" type="hidden" value=@(item.Id) asp-for="@item.Id"/>
                         <input asp-for=@(item.Ativo) name=chkativo class="form-check-input" id="check" type="checkbox"/>
                     </form>
                 </td>
