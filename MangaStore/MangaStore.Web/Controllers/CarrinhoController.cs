@@ -19,12 +19,24 @@ public class CarrinhoController : Controller
 
         if (listaItens != null)
         {
-            carrinhoViewModel = new CarrinhoViewModel()
+            if(HttpContext.Session.GetJson<decimal>("Frete") == null)
             {
-                Itens = listaItens,
-                Frete = services.CalcularFrete("", listaItens.Count),
-                Total = listaItens.Sum(x => x.Qtd * x.Preco)
-            };
+                carrinhoViewModel = new CarrinhoViewModel()
+                {
+                    Itens = listaItens,
+                    Frete = services.CalcularFrete("", listaItens.Count),
+                    Total = listaItens.Sum(x => x.Qtd * x.Preco)
+                };
+            }
+            else
+            {
+                carrinhoViewModel = new CarrinhoViewModel()
+                {
+                    Itens = listaItens,
+                    Frete = HttpContext.Session.GetJson<decimal>("Frete"),
+                    Total = listaItens.Sum(x => x.Qtd * x.Preco)
+                };
+            }
 
             // O valor de frete vai ser transmitido para diversas ações, portanto, ele deve ser armazenado na seção.
             HttpContext.Session.SetJson("Frete", carrinhoViewModel.Frete);
@@ -108,6 +120,16 @@ public class CarrinhoController : Controller
         }
 
         TempData["Success"] = "Produto Removido do Carrinho";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<ActionResult> CalcularFrete(string uf)
+    {
+        FreteServices services = new FreteServices();
+        decimal frete = services.CalcularFrete(uf, 0);
+
+        HttpContext.Session.SetJson("Frete", frete);
 
         return RedirectToAction(nameof(Index));
     }

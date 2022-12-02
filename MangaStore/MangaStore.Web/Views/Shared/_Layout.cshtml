@@ -41,17 +41,17 @@
                             @if(User.IsInRole("Cliente"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-item text-dark">@User.Identity.Name</a>
+                                    <a class="nav-item text-dark" asp-controller="Cliente" asp-action="MeuCadastro">@User.Identity.Name</a>
                                 </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Login">Fazer Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="Index">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Login">Fazer Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="Index">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
                 </div>                

@@ -32,8 +32,52 @@
         }
         <tr>
             <td class="text-right" colspan="4">Total: @Model.Total.ToString("C2") e o frete fica por @Model.Frete.ToString("C2")</td>
+            <td>
+                <form asp-action="CalcularFrete">
+                    <label for="uf">Selecione para qual estado Enviar o Produto?</label>
+                    @Html.DropDownList("uf", new List<SelectListItem> {
+                        new SelectListItem { Text = "AC" },
+                        new SelectListItem { Text = "AL" },
+                        new SelectListItem { Text = "AM" },
+                        new SelectListItem { Text = "AP" },
+                        new SelectListItem { Text = "BA" },
+                        new SelectListItem { Text = "CE" },
+                        new SelectListItem { Text = "DF" },
+                        new SelectListItem { Text = "ES" },
+                        new SelectListItem { Text = "GO" },
+                        new SelectListItem { Text = "MA" },
+                        new SelectListItem { Text = "MG" },
+                        new SelectListItem { Text = "MS" },
+                        new SelectListItem { Text = "MT" },
+                        new SelectListItem { Text = "PA" },
+                        new SelectListItem { Text = "PB" },
+                        new SelectListItem { Text = "PE" },
+                        new SelectListItem { Text = "PI" },
+                        new SelectListItem { Text = "PR" },
+                        new SelectListItem { Text = "RJ" },
+                        new SelectListItem { Text = "RN" },
+                        new SelectListItem { Text = "RO" },
+                        new SelectListItem { Text = "RR" },
+                        new SelectListItem { Text = "RS" },
+                        new SelectListItem { Text = "SC" },
+                        new SelectListItem { Text = "SE" },
+                        new SelectListItem { Text = "SP" },
+                        new SelectListItem { Text = "TO" }
+                    })
+                </form>
+            </td>
         </tr>
     </table>
 }
 
 <a class="btn btn-success" asp-action="Index" asp-controller="Checkout">Checkout</a>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('select').change(function () {
+                this.closest('form').submit();
+            })
+        })
+    </script>
+}

@@ -1,0 +1,115 @@
+﻿@model MeuCadastroViewModel
+
+@{
+    TempData["Title"] = "Meu Cadastro";
+}
+
+<section>
+    <h1>Meu Cadastro</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Nome Completo</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">E-Mail</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EMail)
+        </dd>
+        <dt class="col-sm-2">Data de Nascimento</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataNascimento.Date)
+        </dd>
+        <dt class="col-sm-2">Telefone</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+        <dt class="col-sm-2">CPF</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CPF)
+        </dd>
+        <dt class="col-sm-2">RG</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+    </dl>
+</section>
+<section>
+    <h2>Pedidos</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data do Pedido</th>
+                <th>Total do Pedido</th>
+                <th>Forma de Pagamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Pedidos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormaPagamento)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2>Endereços</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>Número</th>
+                <th>Endereço Padrão?</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Enderecos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CEP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bairro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.EnderecoPadrao)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Endereco" asp-route-id="@item.Id" class="btn btn-warning">Editar Endereço</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+<section>
+    <a asp-action="Edit" asp-route-id="@Model.IdCliente" btn btn-warning>Editar Cadastro</a>
+</section>

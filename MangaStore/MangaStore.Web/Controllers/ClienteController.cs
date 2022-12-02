@@ -6,6 +6,7 @@ using MangaStore.Web.Models;
 using MangaStore.Web.Models.Contexto;
 using MangaStore.Web.Models.ViewModels;
 using MangaStore.Web.Repositories;
+using MangaStore.Web.Services.Autenticacao;
 using MangaStore.Web.Services.Criptografia;
 using MangaStore.Web.Services.Secao;
 
@@ -131,6 +132,39 @@ namespace MangaStore.Web.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult MeuCadastro()
+        {
+            ClaimServices claimServices = new ClaimServices();
+            int idUsuario = Convert.ToInt32(claimServices.RetornarClaim(HttpContext));
+
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            Usuario usuario = usuarioRepository.GetUsuario(idUsuario);
+
+            ClienteRepository repository = new ClienteRepository();
+            Cliente cliente = repository.GetByUsuarioId(idUsuario);
+
+            PedidoRepository pedidoRepository = new PedidoRepository();
+            List<Pedido> pedidos = pedidoRepository.GetPedidoByClienteId(cliente.Id);
+
+            EnderecoClienteRepository enderecoClienteRepository = new EnderecoClienteRepository();
+            List<EnderecoCliente> enderecos = enderecoClienteRepository.GetByClienteId(cliente.Id);
+
+            MeuCadastroViewModel vm = new MeuCadastroViewModel()
+            {
+                IdCliente = cliente.Id,
+                Nome = usuario.Nome,
+                EMail = usuario.EMail,
+                DataNascimento = cliente.DataNascimento,
+                Telefone = usuario.Telefone,
+                CPF = usuario.CPF,
+                RG = cliente.RG,
+                Pedidos = pedidos,
+                Enderecos = enderecos
+            };
+
+            return View(vm);
         }
     }
 }

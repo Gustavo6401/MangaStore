@@ -109,6 +109,8 @@ namespace MangaStore.Web.Controllers
             pedido.DataPedido = DateTime.Now;
             pedido.Total = vm.Total;
             pedido.FormaPagamento = vm.MetodoPagamento;
+            pedido.EnderecoId = vm.Endereco.Id;
+            pedido.ClienteId = vm.Cliente.Id;
 
             PedidoRepository repository = new PedidoRepository();
             repository.Add(pedido);
@@ -117,7 +119,7 @@ namespace MangaStore.Web.Controllers
             {
                 ProdutoPedido produtoPedido = new ProdutoPedido();
                 produtoPedido.QtdComprada = item.Qtd;
-                produtoPedido.ProdutoId = item.Id;
+                produtoPedido.ProdutoId = item.ProdutoId;
                 produtoPedido.PedidoId = pedido.Id;
 
                 ProdutoPedidoRepository produtoPedidoRepository = new ProdutoPedidoRepository();
