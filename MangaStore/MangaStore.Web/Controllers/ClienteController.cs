@@ -86,52 +86,52 @@ namespace MangaStore.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit() => View();
-
-        public async Task<IActionResult> Edit([Bind("Usuario,Cliente,Endereco")] ClienteViewModel clienteViewModel)
+        [HttpGet]
+        public IActionResult Edit()
         {
-            Usuario usuario = clienteViewModel.Usuario;
-            Cliente cliente = clienteViewModel.Cliente;
-            EnderecoCliente endereco = clienteViewModel.Endereco;
-
-            HashMD5 mD5 = new HashMD5();
-            usuario.Senha = mD5.Criptografar(usuario.Senha);
-
-            if (!Cpf.Validar(usuario.CPF))
-            {
-                ViewBag.Erro = "CPF Inválido!";
-
-                return View(ViewBag.Erro);
-            }
-
-            // Consultar Por E-mail
-            var invalidModel = await _context.Usuario.FirstOrDefaultAsync(t => t.EMail == usuario.EMail);
-
-            if (invalidModel != null)
-            {
-                ViewBag.Erro = "E-Mail já existente!";
-
-                return View();
-            }
+            ClaimServices claimServices = new ClaimServices();
+            int idUsuario = Convert.ToInt32(claimServices.RetornarClaim(HttpContext));
 
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            usuarioRepository.Update(usuario);
-
-            cliente.UsuarioId = usuario.Id;
+            Usuario usuario = usuarioRepository.GetUsuario(idUsuario);
 
             ClienteRepository repository = new ClienteRepository();
+            Cliente cliente = repository.GetByUsuarioId(idUsuario);
+
+            EditarClienteViewModel vm = new EditarClienteViewModel()
+            {
+                IdCliente = cliente.Id,
+                Nome = usuario.Nome,
+                EMail = usuario.EMail,
+                DataNascimento = cliente.DataNascimento,
+                Telefone = usuario.Telefone,
+                CPF = usuario.CPF,
+                RG = cliente.RG
+            };
+
+            return View(vm);
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Edit([Bind("ClienteId,Nome,EMail,DataNascimento,Telefone,CPF,RG")] EditarClienteViewModel vm)
+        {
+            ClaimServices claimServices = new ClaimServices();
+            int idUsuario = Convert.ToInt32(claimServices.RetornarClaim(HttpContext));
+
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            Usuario usuario = usuarioRepository.GetUsuario(idUsuario);
+            usuario.Nome = vm.Nome;
+            usuario.EMail = vm.EMail;
+            usuario.Telefone = vm.Telefone;
+
+            ClienteRepository repository = new ClienteRepository();
+            Cliente cliente = repository.GetByUsuarioId(idUsuario);
+            cliente.DataNascimento = vm.DataNascimento;
+
+            usuarioRepository.Update(usuario);
             repository.Update(cliente);
 
-            endereco.ClienteId = cliente.Id;
-
-            EnderecoClienteRepository enderecoClienteRepository = new EnderecoClienteRepository();
-
-            foreach (var item in _listaEnderecos)
-            {
-                enderecoClienteRepository.Update(item);
-            }
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(MeuCadastro));
         }
 
         public IActionResult MeuCadastro()
