@@ -9,7 +9,10 @@ namespace MangaStore.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            PedidoRepository repository = new PedidoRepository();
+            List<Pedido> lista = repository.Get();
+
+            return View(lista);
         }
 
         public IActionResult Details(int idPedido)
