@@ -9,5 +9,6 @@ namespace MangaStore.Web.Repositories
     {
         MangaContext _context = new MangaContext();
         public Cliente GetByUsuarioId(int id) => _context.Cliente.FirstOrDefault(x => x.UsuarioId == id);
+        public Cliente GetCliente(int id) => _context.Cliente.FirstOrDefault(x => x.Id == id);
     }
 }

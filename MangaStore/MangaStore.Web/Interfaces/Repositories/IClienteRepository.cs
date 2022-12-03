@@ -6,5 +6,6 @@ namespace MangaStore.Web.Interfaces.Repositories
     public interface IClienteRepository : IRepository<Cliente>
     {
         public Cliente GetByUsuarioId(int id);
+        public Cliente GetCliente(int id);
     }
 }

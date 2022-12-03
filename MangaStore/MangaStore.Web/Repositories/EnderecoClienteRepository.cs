@@ -12,6 +12,6 @@ namespace MangaStore.Web.Repositories
                                                                                        .ToList();
 
         public EnderecoCliente GetById(int id) =>
-            _context.EnderecoCliente.Find(id)!;
+            _context.EnderecoCliente.FirstOrDefault(x => x.Id == id)!;
     }
 }

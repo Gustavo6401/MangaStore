@@ -5,5 +5,6 @@ namespace MangaStore.Web.Interfaces.Repositories
 {
     public interface IProdutoPedidoRepository : IRepository<ProdutoPedido>
     {
+        public List<ProdutoPedido> GetByPedidoId(int id);
     }
 }

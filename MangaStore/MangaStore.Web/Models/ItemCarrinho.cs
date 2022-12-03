@@ -33,4 +33,12 @@ public class ItemCarrinho
         Preco = produto.Preco;
         Qtd = 1;
     }
+
+    public ItemCarrinho(Produto produto, int qtd)
+    {
+        NomeProduto = produto.Nome;
+        ProdutoId = produto.Id;
+        Preco = produto.Preco;
+        Qtd = qtd;
+    }
 }

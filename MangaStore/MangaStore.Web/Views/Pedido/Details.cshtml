@@ -1,0 +1,84 @@
+﻿@model PedidoViewModel
+
+@{
+    ViewData["Title"] = "Pedido";
+}
+
+<section>
+    <h1>Meu Pedido</h1>
+    <hr />
+    <h2>Dados de Pedido</h2>
+    <dl class="row">        
+        <dt class="col-sm-2">Nome Completo</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">Data do Pedido</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dt class="col-sm-2">Total</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+        <dt class="col-sm-2">Forma de Pagamento</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormaPagamento)
+        </dd>
+    </dl>
+</section>
+<section>
+    <h2>Endereço de Entrega</h2>
+    <dl class="row">        
+        <dt class="col-sm-2">Rua</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Rua)
+        </dd>
+        <dt class="col-sm-2">CEP</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.CEP)
+        </dd>
+        <dt class="col-sm-2">Bairro</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Bairro)
+        </dd>
+        <dt class="col-sm-2">Cidade</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Cidade)
+        </dd>
+        <dt class="col-sm-2">UF</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.UF)
+        </dd>
+        <dt class="col-sm-2">Número</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco.Numero)
+        </dd>
+    </dl>
+</section>
+<section>
+    <table class="table">
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th></th>
+            <th>Preço</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var item in Model.Pedidos)
+        {
+            <tr>
+                <td>@item.NomeProduto</td>
+                <td>@item.Qtd</td>
+                <td>
+                    <a class="btn btn-success btn-sm" asp-action="Add" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>+</a>
+                    <a class="btn btn-primary btn-sm" asp-action="Decrease" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>-</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Remove" asp-controller="Carrinho" asp-route-id=@item.ProdutoId>Remover</a>
+                </td>
+                <td>@item.Preco.ToString("C2")</td>
+                <td>@Model.Pedidos.Where(x => x.ProdutoId == item.ProdutoId).Sum(x => x.Qtd * x.Preco).ToString("C2")</td>
+            </tr>
+        }
+    </table>
+</section>
+<a asp-action="MeuCadastro" asp-controller="Cliente" class="btn btn-primary">Meu Cadastro</a>

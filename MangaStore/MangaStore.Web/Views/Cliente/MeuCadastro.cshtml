@@ -42,6 +42,7 @@
                 <th>Data do Pedido</th>
                 <th>Total do Pedido</th>
                 <th>Forma de Pagamento</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -56,6 +57,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FormaPagamento)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Pedido" asp-route-idPedido="@item.Id" class="btn btn-warning">Detalhes</a>
                     </td>
                 </tr>
             }
@@ -111,5 +115,5 @@
     </table>
 </section>
 <section>
-    <a asp-action="Edit" asp-route-id="@Model.IdCliente" btn btn-warning>Editar Cadastro</a>
+    <a asp-action="Edit" asp-route-id="@Model.IdCliente" class="btn btn-warning">Editar Cadastro</a>
 </section>
