@@ -126,6 +126,13 @@ namespace MangaStore.Web.Controllers
                 produtoPedidoRepository.Add(produtoPedido);
             }
 
+            StatusRepository statusRepository = new StatusRepository();
+            StatusPedido status = new StatusPedido();
+            status.Status = "Pagamento Confirmado";
+            status.PedidoId = pedido.Id;
+
+            statusRepository.Add(status);
+
             return View();
         }
     }

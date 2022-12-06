@@ -1,4 +1,4 @@
-﻿@model List<MangaStore.Web.Models.Pedido>
+﻿@model List<ListaPedidosViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +19,10 @@
             </th>
             <th>
                 Forma de Pagamento
-            </th>            
+            </th>
+            <th>
+                Status
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -27,18 +30,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DataPedido)
+                @Html.DisplayFor(modelItem => item.Pedido.DataPedido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Total)
+                @Html.DisplayFor(modelItem => item.Pedido.Total)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FormaPagamento)
+                @Html.DisplayFor(modelItem => item.Pedido.FormaPagamento)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-idPedido="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <form asp-action="Edit" asp-controller="Status">
+                    @Html.DropDownListFor(modelItem => item.Status, new List<SelectListItem> {
+                        new SelectListItem { Text = "Aguardando Pagamento" },
+                        new SelectListItem { Text = "Pagamento Rejeitado" },
+                        new SelectListItem { Text = "Pagamento com Sucesso" },
+                        new SelectListItem { Text = "Aguardando Retirada" },
+                        new SelectListItem { Text = "Em Trânsito" },
+                        new SelectListItem { Text = "Entregue" }
+                    })
+                </form>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-idPedido="@item.Pedido.Id" class="btn btn-primary">Details</a>                
             </td>
         </tr>
 }

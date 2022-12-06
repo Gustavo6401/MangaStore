@@ -10,7 +10,37 @@ namespace MangaStore.Web.Controllers
         public IActionResult Index()
         {
             PedidoRepository repository = new PedidoRepository();
-            List<Pedido> lista = repository.Get();
+            List<Pedido> listaPedido = repository.Get();
+
+            List<ListaPedidosViewModel> lista = new List<ListaPedidosViewModel>();
+
+            StatusRepository statusRepository = new StatusRepository();
+
+            foreach(var item in listaPedido)
+            {
+                StatusPedido status = statusRepository.GetByPedidoId(item.Id);
+
+                if(status != null)
+                {
+                    ListaPedidosViewModel vm = new ListaPedidosViewModel()
+                    {
+                        Status = status.Status,
+                        Pedido = item,
+                    };
+
+                    lista.Add(vm);
+                }
+                else
+                {
+                    ListaPedidosViewModel vm = new ListaPedidosViewModel()
+                    {
+                        Status = "Entregue",
+                        Pedido = item,
+                    };
+
+                    lista.Add(vm);
+                }                
+            }
 
             return View(lista);
         }

@@ -10,6 +10,7 @@ namespace MangaStore.Web.Models.Contexto
         public DbSet<Produto> Produto { get; set; }
         public DbSet<ImagensProduto> ImagensProduto { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<StatusPedido> StatusPedido { get; set; }
         public DbSet<EnderecoCliente> EnderecoCliente { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
         public DbSet<ProdutoPedido> ProdutoPedido { get; set; }
@@ -26,6 +27,17 @@ namespace MangaStore.Web.Models.Contexto
             {
                 u.HasNoKey();
                 u.ToView("UsuarioCliente");
+            });
+
+            modelBuilder.Entity<StatusPedido>(u =>
+            {
+                u.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("Int");
+
+                u.HasKey(t => t.Id);
+                u.HasIndex("PedidoId");
+                u.ToTable("StatusPedido");
             });
         }
 
