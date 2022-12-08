@@ -113,6 +113,9 @@
             }
         </tbody>
     </table>
+    <div>
+        <a asp-action="Create" asp-controller="Endereco" asp-route-idCliente="@Model.IdCliente" class="btn btn-success">Cadastrar Novo Endereço</a>
+    </div>
 </section>
 <section>
     <a asp-action="Edit" asp-route-id="@Model.IdCliente" class="btn btn-warning">Editar Cadastro</a>

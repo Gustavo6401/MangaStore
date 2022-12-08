@@ -27,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Pedido.DataPedido)
@@ -40,20 +40,40 @@
             </td>
             <td>
                 <form asp-action="Edit" asp-controller="Status">
-                    @Html.DropDownListFor(modelItem => item.Status, new List<SelectListItem> {
+                    @*@Html.DropDownListFor(modelItem => item.Status, new List<SelectListItem> {
                         new SelectListItem { Text = "Aguardando Pagamento" },
                         new SelectListItem { Text = "Pagamento Rejeitado" },
                         new SelectListItem { Text = "Pagamento com Sucesso" },
                         new SelectListItem { Text = "Aguardando Retirada" },
                         new SelectListItem { Text = "Em Trânsito" },
                         new SelectListItem { Text = "Entregue" }
-                    })
+                    })*@
+
+                    <select asp-for="@(item.Status)" name="statusPedido">
+                        <option>Aguardando Pagamento</option>
+                        <option>Pagamento Rejeitado</option>
+                        <option>Pagamento com Sucesso</option>
+                        <option>Aguardando Retirada</option>
+                        <option>Em Trânsito</option>
+                        <option>Entregue</option>
+                    </select>
+                    <input asp-for="@(item.Pedido.Id)" name="pedidoId" value=@item.Pedido.Id type="hidden" />
                 </form>
             </td>
             <td>
                 <a asp-action="Details" asp-route-idPedido="@item.Pedido.Id" class="btn btn-primary">Details</a>                
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function() {
+            $("select").change(function() {
+                $(this).closest('form').submit();
+            })
+        })
+    </script>
+}
