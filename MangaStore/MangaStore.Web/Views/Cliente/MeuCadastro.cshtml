@@ -34,6 +34,7 @@
         </dd>
     </dl>
 </section>
+<a asp-action=MudarSenha asp-controller=Usuario class="btn btn-warning">Alterar Senha</a>
 <section>
     <h2>Pedidos</h2>
     <table class="table">
@@ -59,7 +60,7 @@
                         @Html.DisplayFor(modelItem => item.FormaPagamento)
                     </td>
                     <td>
-                        <a asp-action="Details" asp-controller="Pedido" asp-route-idPedido="@item.Id" class="btn btn-warning">Detalhes</a>
+                        <a asp-action="Details" asp-controller="Pedido" asp-route-idPedido="@item.Id" class="btn btn-info">Detalhes</a>
                     </td>
                 </tr>
             }

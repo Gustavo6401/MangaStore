@@ -1,0 +1,115 @@
+﻿@model EnderecoCliente
+
+@{
+    ViewData["Title"] = "Editar Endereço";
+}
+
+<h1>Editar</h1>
+
+<h4>Endereço</h4>
+<hr />
+<section class="row">
+    <div class="col-md-4">
+        <form asp-action=Edit method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for=ClienteId />
+            <input type="hidden" asp-for=Id />
+            <div class="form-group">
+                <label asp-for=CEP class="control-label">CEP</label>
+                <input asp-for=CEP class="form-control" id="cep" onmouseleave="consultarCEP()" />
+                <span asp-validation-for=CEP class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Rua class="control-label">Rua</label>
+                <input asp-for=Rua class="form-control" id="rua" />
+                <span asp-validation-for=Rua class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Bairro class="control-label">CEP</label>
+                <input asp-for=Bairro class="form-control" id="bairro" />
+                <span asp-validation-for=Bairro class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Cidade class="control-label">Rua</label>
+                <input asp-for=Cidade class="form-control" id="cidade" />
+                <span asp-validation-for=Cidade class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=UF class="control-label">UF</label>
+                @Html.DropDownListFor(model => model.UF, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "AC" },
+                    new SelectListItem { Text = "AL" },
+                    new SelectListItem { Text = "AM" },
+                    new SelectListItem { Text = "AP" },
+                    new SelectListItem { Text = "BA" },
+                    new SelectListItem { Text = "CE" },
+                    new SelectListItem { Text = "DF" },
+                    new SelectListItem { Text = "ES" },
+                    new SelectListItem { Text = "GO" },
+                    new SelectListItem { Text = "MA" },
+                    new SelectListItem { Text = "MG" },
+                    new SelectListItem { Text = "MS" },
+                    new SelectListItem { Text = "MT" },
+                    new SelectListItem { Text = "PA" },
+                    new SelectListItem { Text = "PB" },
+                    new SelectListItem { Text = "PE" },
+                    new SelectListItem { Text = "PI" },
+                    new SelectListItem { Text = "PR" },
+                    new SelectListItem { Text = "RJ" },
+                    new SelectListItem { Text = "RN" },
+                    new SelectListItem { Text = "RO" },
+                    new SelectListItem { Text = "RR" },
+                    new SelectListItem { Text = "RS" },
+                    new SelectListItem { Text = "SC" },
+                    new SelectListItem { Text = "SE" },
+                    new SelectListItem { Text = "SP" },
+                    new SelectListItem { Text = "TO" }
+                })
+                <span asp-validation-for=UF class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=Numero class="control-label">Número</label>
+                <input asp-for=Numero class="form-control" />
+                <span asp-validation-for=Numero class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=EnderecoPadrao class="control-label">Endereço Padrão?</label>
+                @Html.CheckBoxFor(model => model.EnderecoPadrao)
+                <span asp-validation-for=EnderecoPadrao class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Editar Endereço" class="btn btn-warning" />
+            </div>
+        </form>
+    </div>
+</section>
+
+<div>
+    <a asp-action="MeuCadastro" asp-controller="Cliente" class="btn btn-info">Voltar para a Página do Meu Cadastro</a>
+</div>
+
+@section Scripts {
+    <script>
+        function consultarCEP() {
+            var cep = document.querySelector('#cep')
+                .value;
+
+            fetch(`https://viacep.com.br/ws/${cep}/json`)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('#rua')
+                        .value = data.logradouro;
+
+                    document.querySelector('#bairro')
+                        .value = data.bairro;
+
+                    document.querySelector('#cidade')
+                        .value = data.localidade;
+
+                    document.querySelector('#UF')
+                        .value = data.uf;
+                })
+        }
+    </script>
+}

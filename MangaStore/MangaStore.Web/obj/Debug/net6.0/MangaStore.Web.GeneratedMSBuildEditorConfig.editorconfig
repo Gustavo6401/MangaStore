@@ -5,6 +5,7 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MangaStore.Web
 build_property.RootNamespace = MangaStore.Web
@@ -49,6 +50,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Endereco/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kZXJlY29cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Endereco/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kZXJlY29cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gustavo/Documents/Gustavo TI/Programação/Faculdade/Projeto Integrador/MangaStore/MangaStore/MangaStore.Web/Views/Home/Index.cshtml]

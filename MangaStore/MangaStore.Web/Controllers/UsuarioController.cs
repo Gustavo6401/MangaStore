@@ -365,7 +365,29 @@ namespace MangaStore.Web.Controllers
 
         public IActionResult MudarSenha()
         {
-            throw new NotImplementedException();
+            ClaimServices claims = new ClaimServices();
+            int id = Convert.ToInt32(claims.RetornarClaim(HttpContext));
+
+            UsuarioRepository repository = new UsuarioRepository();
+            Usuario usuario = repository.GetUsuario(id);
+
+            return View(usuario);
+        }
+
+        [HttpPost]
+        public IActionResult MudarSenha(int id, [Bind("Id,Nome,EMail,Telefone,Senha,Permisao,Ativo,CPF")] Usuario usuario)
+        {
+            UsuarioRepository repository = new UsuarioRepository();
+            Usuario model = repository.GetUsuario(id);
+
+            HashMD5 md5 = new HashMD5();
+            usuario.Senha = md5.Criptografar(usuario.Senha);
+
+            model.Senha = usuario.Senha;
+
+            repository.Update(model);
+
+            return RedirectToAction("MeuCadastro","Cliente");
         }
     }
 }

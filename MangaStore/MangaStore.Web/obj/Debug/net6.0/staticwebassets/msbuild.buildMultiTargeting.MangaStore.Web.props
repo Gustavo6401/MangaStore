@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MangaStore.Web.props" />
+</Project>

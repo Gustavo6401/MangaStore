@@ -272,3 +272,16 @@ C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Linq.Async.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.Mvc.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.Razor.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.Helpers.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\bin\Debug\net6.0\X.PagedList.Web.Common.dll
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\obj\Debug\net6.0\staticwebassets\msbuild.MangaStore.Web.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\obj\Debug\net6.0\staticwebassets\msbuild.build.MangaStore.Web.props
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.MangaStore.Web.props
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.MangaStore.Web.props
+C:\Users\Gustavo\Documents\Gustavo TI\Programação\Faculdade\Projeto Integrador\MangaStore\MangaStore\MangaStore.Web\obj\Debug\net6.0\staticwebassets.pack.json
